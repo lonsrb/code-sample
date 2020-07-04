@@ -7,34 +7,55 @@
 //
 
 import UIKit
-
-
+import Combine
 
 class ListingsViewController: UIViewController {
-
     
+    @IBOutlet weak var listingsTableView: UITableView!
+    var listingsViewModel : ListingsViewModel?
+    private var cancellables: Set<AnyCancellable> = []
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        listingsTableView.tableFooterView = UIView()
+        
+        listingsViewModel = ListingsViewModel()
+        bindViewModel(viewModel: listingsViewModel!)
+        listingsViewModel!.fetch()
     }
+    
+    private func bindViewModel(viewModel : ListingsViewModel) {
+        viewModel.$listings.sink { [weak self] listings in
+            guard let self = self else { return }
+            self.listingsTableView.reloadData()
+//               self?.renderPosts(posts)
+           }.store(in: &cancellables)
+       }
 
 }
 
-extension ListingsViewController : UITableViewDataSource, UITableViewDelegate {
+extension ListingsViewController :  UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        guard let listingsViewModel = listingsViewModel else { return 0 }
+        return listingsViewModel.listings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListingCell",
-                                                       for: indexPath) as? ListingTableViewCell else {
+                                                       for: indexPath) as? ListingTableViewCell,
+            let listingsViewModel = listingsViewModel else {
             return UITableViewCell()
         }
         
-        
+        cell.fillWithListing(listingViewModel: listingsViewModel.listings[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 220
     }
     
     

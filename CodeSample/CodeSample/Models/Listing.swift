@@ -10,6 +10,7 @@ struct Listing : Codable{
     var id : UInt64
     var thumbUrl : String
     var address : String
+    var addressLine2 : String
     var subTitle : String?
     var price : UInt32
     var squareFootage : UInt32?

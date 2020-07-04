@@ -7,3 +7,15 @@
 //
 
 import Foundation
+import Combine
+
+class ListingsViewModel: ObservableObject  {
+    @Published private(set) var listings: [ListingViewModel] = []
+
+    func fetch() {
+        listings = ListingsService.tempGetDummyListings().map({ (listing) -> ListingViewModel in
+            ListingViewModel(listing: listing)
+        })
+        print(listings)
+    }
+}
