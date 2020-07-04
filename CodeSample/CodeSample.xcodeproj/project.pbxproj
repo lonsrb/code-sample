@@ -21,6 +21,7 @@
 		EB70079424B0D0C700EA2AE2 /* ListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */; };
 		EB70079624B0D27200EA2AE2 /* ListingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079524B0D27200EA2AE2 /* ListingsService.swift */; };
 		EB70079924B0D2F000EA2AE2 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079824B0D2F000EA2AE2 /* Listing.swift */; };
+		EBFA553324B0EC18002B2C36 /* PropertyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFA553224B0EC18002B2C36 /* PropertyType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingTableViewCell.swift; sourceTree = "<group>"; };
 		EB70079524B0D27200EA2AE2 /* ListingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsService.swift; sourceTree = "<group>"; };
 		EB70079824B0D2F000EA2AE2 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		EBFA553224B0EC18002B2C36 /* PropertyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				EB70079824B0D2F000EA2AE2 /* Listing.swift */,
+				EBFA553224B0EC18002B2C36 /* PropertyType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				EB70079924B0D2F000EA2AE2 /* Listing.swift in Sources */,
 				EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */,
 				EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */,
+				EBFA553324B0EC18002B2C36 /* PropertyType.swift in Sources */,
 				EB70079224B0D09A00EA2AE2 /* ListingsViewModel.swift in Sources */,
 				EB70079424B0D0C700EA2AE2 /* ListingTableViewCell.swift in Sources */,
 				EB70079024B0D08200EA2AE2 /* NetworkingServiceProtocol.swift in Sources */,
