@@ -9,12 +9,18 @@
 /* Begin PBXBuildFile section */
 		EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075924B0C43200EA2AE2 /* AppDelegate.swift */; };
 		EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */; };
-		EB70075E24B0C43200EA2AE2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ViewController.swift */; };
+		EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */; };
 		EB70076124B0C43200EA2AE2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB70075F24B0C43200EA2AE2 /* Main.storyboard */; };
 		EB70076324B0C43400EA2AE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB70076224B0C43400EA2AE2 /* Assets.xcassets */; };
 		EB70076624B0C43400EA2AE2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB70076424B0C43400EA2AE2 /* LaunchScreen.storyboard */; };
 		EB70077124B0C43500EA2AE2 /* CodeSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70077024B0C43500EA2AE2 /* CodeSampleTests.swift */; };
 		EB70077C24B0C43500EA2AE2 /* CodeSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70077B24B0C43500EA2AE2 /* CodeSampleUITests.swift */; };
+		EB70078E24B0D06300EA2AE2 /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70078D24B0D06300EA2AE2 /* NetworkingService.swift */; };
+		EB70079024B0D08200EA2AE2 /* NetworkingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70078F24B0D08200EA2AE2 /* NetworkingServiceProtocol.swift */; };
+		EB70079224B0D09A00EA2AE2 /* ListingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079124B0D09A00EA2AE2 /* ListingsViewModel.swift */; };
+		EB70079424B0D0C700EA2AE2 /* ListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */; };
+		EB70079624B0D27200EA2AE2 /* ListingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079524B0D27200EA2AE2 /* ListingsService.swift */; };
+		EB70079924B0D2F000EA2AE2 /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70079824B0D2F000EA2AE2 /* Listing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +44,7 @@
 		EB70075624B0C43200EA2AE2 /* CodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70075924B0C43200EA2AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EB70075D24B0C43200EA2AE2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsViewController.swift; sourceTree = "<group>"; };
 		EB70076024B0C43200EA2AE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EB70076224B0C43400EA2AE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB70076524B0C43400EA2AE2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +55,12 @@
 		EB70077724B0C43500EA2AE2 /* CodeSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70077B24B0C43500EA2AE2 /* CodeSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSampleUITests.swift; sourceTree = "<group>"; };
 		EB70077D24B0C43500EA2AE2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB70078D24B0D06300EA2AE2 /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
+		EB70078F24B0D08200EA2AE2 /* NetworkingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingServiceProtocol.swift; sourceTree = "<group>"; };
+		EB70079124B0D09A00EA2AE2 /* ListingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsViewModel.swift; sourceTree = "<group>"; };
+		EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingTableViewCell.swift; sourceTree = "<group>"; };
+		EB70079524B0D27200EA2AE2 /* ListingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingsService.swift; sourceTree = "<group>"; };
+		EB70079824B0D2F000EA2AE2 /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +111,13 @@
 		EB70075824B0C43200EA2AE2 /* CodeSample */ = {
 			isa = PBXGroup;
 			children = (
+				EB70079724B0D2DD00EA2AE2 /* Models */,
+				EB70078C24B0CFF200EA2AE2 /* Views */,
+				EB70078B24B0CFD800EA2AE2 /* Controllers */,
+				EB70078A24B0CFC400EA2AE2 /* Services */,
+				EB70078924B0CFB600EA2AE2 /* ViewModels */,
 				EB70075924B0C43200EA2AE2 /* AppDelegate.swift */,
 				EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */,
-				EB70075D24B0C43200EA2AE2 /* ViewController.swift */,
-				EB70075F24B0C43200EA2AE2 /* Main.storyboard */,
 				EB70076224B0C43400EA2AE2 /* Assets.xcassets */,
 				EB70076424B0C43400EA2AE2 /* LaunchScreen.storyboard */,
 				EB70076724B0C43400EA2AE2 /* Info.plist */,
@@ -126,6 +141,49 @@
 				EB70077D24B0C43500EA2AE2 /* Info.plist */,
 			);
 			path = CodeSampleUITests;
+			sourceTree = "<group>";
+		};
+		EB70078924B0CFB600EA2AE2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EB70079124B0D09A00EA2AE2 /* ListingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		EB70078A24B0CFC400EA2AE2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EB70078D24B0D06300EA2AE2 /* NetworkingService.swift */,
+				EB70078F24B0D08200EA2AE2 /* NetworkingServiceProtocol.swift */,
+				EB70079524B0D27200EA2AE2 /* ListingsService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EB70078B24B0CFD800EA2AE2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		EB70078C24B0CFF200EA2AE2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EB70075F24B0C43200EA2AE2 /* Main.storyboard */,
+				EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EB70079724B0D2DD00EA2AE2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EB70079824B0D2F000EA2AE2 /* Listing.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +317,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB70075E24B0C43200EA2AE2 /* ViewController.swift in Sources */,
+				EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */,
+				EB70079924B0D2F000EA2AE2 /* Listing.swift in Sources */,
 				EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */,
 				EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */,
+				EB70079224B0D09A00EA2AE2 /* ListingsViewModel.swift in Sources */,
+				EB70079424B0D0C700EA2AE2 /* ListingTableViewCell.swift in Sources */,
+				EB70079024B0D08200EA2AE2 /* NetworkingServiceProtocol.swift in Sources */,
+				EB70079624B0D27200EA2AE2 /* ListingsService.swift in Sources */,
+				EB70078E24B0D06300EA2AE2 /* NetworkingService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
