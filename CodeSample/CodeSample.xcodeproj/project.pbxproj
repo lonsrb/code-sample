@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB5525C224B21BBD00D18B7A /* CompassSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C124B21BBD00D18B7A /* CompassSans-Regular.ttf */; };
+		EB5525C424B21C3700D18B7A /* CompassSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C324B21C3700D18B7A /* CompassSans-Bold.ttf */; };
+		EB5525C624B2226700D18B7A /* CompassSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */; };
+		EB5525C824B2367300D18B7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525C724B2367300D18B7A /* Constants.swift */; };
 		EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075924B0C43200EA2AE2 /* AppDelegate.swift */; };
 		EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */; };
 		EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */; };
@@ -43,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB5525C124B21BBD00D18B7A /* CompassSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Regular.ttf"; sourceTree = "<group>"; };
+		EB5525C324B21C3700D18B7A /* CompassSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Bold.ttf"; sourceTree = "<group>"; };
+		EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Medium.ttf"; sourceTree = "<group>"; };
+		EB5525C724B2367300D18B7A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EB70075624B0C43200EA2AE2 /* CodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70075924B0C43200EA2AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +100,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB5525C024B21B9F00D18B7A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EB5525C324B21C3700D18B7A /* CompassSans-Bold.ttf */,
+				EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */,
+				EB5525C124B21BBD00D18B7A /* CompassSans-Regular.ttf */,
+				EB5525C724B2367300D18B7A /* Constants.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		EB70074D24B0C43200EA2AE2 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +142,7 @@
 				EB70075924B0C43200EA2AE2 /* AppDelegate.swift */,
 				EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */,
 				EB70076224B0C43400EA2AE2 /* Assets.xcassets */,
+				EB5525C024B21B9F00D18B7A /* Resources */,
 				EB70076424B0C43400EA2AE2 /* LaunchScreen.storyboard */,
 				EB70076724B0C43400EA2AE2 /* Info.plist */,
 			);
@@ -296,7 +316,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5525C424B21C3700D18B7A /* CompassSans-Bold.ttf in Resources */,
 				EB70076624B0C43400EA2AE2 /* LaunchScreen.storyboard in Resources */,
+				EB5525C224B21BBD00D18B7A /* CompassSans-Regular.ttf in Resources */,
+				EB5525C624B2226700D18B7A /* CompassSans-Medium.ttf in Resources */,
 				EB70076324B0C43400EA2AE2 /* Assets.xcassets in Resources */,
 				EB70076124B0C43200EA2AE2 /* Main.storyboard in Resources */,
 			);
@@ -334,6 +357,7 @@
 				EBB6A43824B1088400A6C75E /* ListingViewModel.swift in Sources */,
 				EB70079624B0D27200EA2AE2 /* ListingsService.swift in Sources */,
 				EB70078E24B0D06300EA2AE2 /* NetworkingService.swift in Sources */,
+				EB5525C824B2367300D18B7A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

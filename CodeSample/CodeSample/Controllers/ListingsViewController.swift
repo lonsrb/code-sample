@@ -15,25 +15,30 @@ class ListingsViewController: UIViewController {
     var listingsViewModel : ListingsViewModel?
     private var cancellables: Set<AnyCancellable> = []
 
+    @IBOutlet weak var filtersButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         listingsTableView.tableFooterView = UIView()
-        
         listingsViewModel = ListingsViewModel()
         bindViewModel(viewModel: listingsViewModel!)
         listingsViewModel!.fetch()
+        
+        filtersButton.layer.borderColor = UIColor.codeSampleGrayBorder().cgColor
+        filtersButton.layer.borderWidth = 1
     }
     
     private func bindViewModel(viewModel : ListingsViewModel) {
         viewModel.$listings.sink { [weak self] listings in
             guard let self = self else { return }
             self.listingsTableView.reloadData()
-//               self?.renderPosts(posts)
            }.store(in: &cancellables)
        }
 
+    @IBAction func filtersButtonTapped(_ sender: UIButton) {
+        print("filtersButtonTapped")
+    }
 }
 
 extension ListingsViewController :  UITableViewDataSource, UITableViewDelegate {

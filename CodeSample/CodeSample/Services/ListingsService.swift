@@ -12,7 +12,7 @@ class ListingsService {
     class func tempGetDummyListings() -> [Listing] {
         var listings = [Listing]()
         listings.append(Listing(id: 11111,
-                                thumbUrl: "https://via.placeholder.com/400x200.png?text=Listing+Image+Placeholder+A",
+                                thumbUrl: "https://picsum.photos/id/1029/600/220.jpg",
                                 address: "123 Hire Ryan Ln",
                                 addressLine2: "Austin, TX, 78701",
                                 subTitle: "New Construction",
@@ -25,8 +25,8 @@ class ListingsService {
                                 propertyType: .house))
         
         listings.append(Listing(id: 22222,
-                                thumbUrl: "https://via.placeholder.com/400x200.png?text=Listing+Image+Placeholder+B",
-                                address: "5432 Swift Way",
+                                thumbUrl: "https://picsum.photos/id/1040/600/220.jpg",
+                                address: "5432 New Swan Stone Way",
                                 addressLine2: "Austin, TX, 78701",
                                 subTitle: "Coming Soon!",
                                 price: 987000,
@@ -38,7 +38,7 @@ class ListingsService {
                                 propertyType: .townhouse))
         
         listings.append(Listing(id: 33333,
-                                thumbUrl: "https://via.placeholder.com/400x200.png?text=Listing+Image+Placeholder+C",
+                                thumbUrl: "https://picsum.photos/id/10/600/220.jpg",
                                 address: "987 Aloha Pkwy",
                                 addressLine2: "Austin, TX, 78701",
                                 subTitle: nil,

@@ -60,5 +60,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>CompassSans-Medium.tff</string>
+		<string>CompassSans-Bold.tff</string>
+		<string>CompassSans-Regular.tff</string>
+	</array>
 </dict>
 </plist>
