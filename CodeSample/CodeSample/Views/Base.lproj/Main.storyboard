@@ -48,6 +48,7 @@
                                                         <constraint firstAttribute="width" constant="28" id="uoK-nl-L9M"/>
                                                     </constraints>
                                                     <state key="normal" image="favoriteStar"/>
+                                                    <state key="highlighted" image="favoriteStarFilled"/>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="bottom" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="OvF-fn-45f">
                                                     <rect key="frame" x="15" y="122.5" width="384" height="82.5"/>
@@ -218,7 +219,7 @@
                                     <color key="titleColor" red="0.15549194379695386" green="0.26522763156629242" blue="0.67230003238341962" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="filtersButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pH0-35-4Yc"/>
+                                    <segue destination="Tvy-nm-saw" kind="presentation" modalPresentationStyle="fullScreen" id="ajH-Rk-jyK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -244,6 +245,102 @@
             </objects>
             <point key="canvasLocation" x="166.66666666666669" y="204.91071428571428"/>
         </scene>
+        <!--Filters View Controller-->
+        <scene sceneID="VP0-Vc-DNC">
+            <objects>
+                <viewController id="Tvy-nm-saw" customClass="FiltersViewController" customModule="CodeSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dr3-it-2td">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Property Types" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6K-v0-KLQ">
+                                <rect key="frame" x="149" y="56" width="130" height="24"/>
+                                <fontDescription key="fontDescription" name="CompassSans-Medium" family="Compass Sans" pointSize="19"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dn4-80-9fS">
+                                <rect key="frame" x="348" y="53" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="ryI-KM-a9I"/>
+                                    <constraint firstAttribute="height" constant="30" id="wp1-QN-OQL"/>
+                                </constraints>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneTapped:" destination="Tvy-nm-saw" eventType="touchUpInside" id="eQh-Gt-nxb"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="POH-gP-Eqv">
+                                <rect key="frame" x="0.0" y="96" width="414" height="800"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="blue" indentationWidth="10" reuseIdentifier="PropertyTypeCell" textLabel="Awb-oP-eLU" imageView="CzW-Sd-L4a" rowHeight="60" style="IBUITableViewCellStyleDefault" id="cMq-zl-hai">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cMq-zl-hai" id="WVP-zX-xO6">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eJE-aG-Obs">
+                                                    <rect key="frame" x="0.0" y="11" width="414" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" red="0.87176165800000005" green="0.87176165800000005" blue="0.87176165800000005" alpha="0.4907570423" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </view>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Awb-oP-eLU">
+                                                    <rect key="frame" x="57" y="0.0" width="337" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" name="CompassSans-Regular" family="Compass Sans" pointSize="19"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="checkmark.circle" catalog="system" highlightedImage="checkmark.circle.fill" id="CzW-Sd-L4a">
+                                                    <rect key="frame" x="22" y="20.5" width="20" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FJx-SK-0BI">
+                                                    <rect key="frame" x="20" y="58" width="394" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="selectedBackgroundView" destination="eJE-aG-Obs" id="eJo-h6-fwF"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Tvy-nm-saw" id="piH-SP-Zyz"/>
+                                    <outlet property="delegate" destination="Tvy-nm-saw" id="UZh-cJ-izC"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="POH-gP-Eqv" firstAttribute="trailing" secondItem="oEf-9d-ZLb" secondAttribute="trailing" id="4sO-qj-WNH"/>
+                            <constraint firstItem="Dn4-80-9fS" firstAttribute="top" secondItem="oEf-9d-ZLb" secondAttribute="top" constant="9" id="OsZ-Ne-jtt"/>
+                            <constraint firstItem="POH-gP-Eqv" firstAttribute="top" secondItem="Dn4-80-9fS" secondAttribute="bottom" constant="13" id="RZf-Hs-j5M"/>
+                            <constraint firstItem="POH-gP-Eqv" firstAttribute="leading" secondItem="oEf-9d-ZLb" secondAttribute="leading" id="SqP-ha-XEJ"/>
+                            <constraint firstItem="Z6K-v0-KLQ" firstAttribute="centerY" secondItem="Dn4-80-9fS" secondAttribute="centerY" id="WYr-qk-DKu"/>
+                            <constraint firstItem="Z6K-v0-KLQ" firstAttribute="leading" secondItem="oEf-9d-ZLb" secondAttribute="leading" constant="149" id="dRJ-XU-Twf"/>
+                            <constraint firstItem="Dn4-80-9fS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Z6K-v0-KLQ" secondAttribute="trailing" constant="8" symbolic="YES" id="dZ8-KH-PVn"/>
+                            <constraint firstItem="oEf-9d-ZLb" firstAttribute="trailing" secondItem="Dn4-80-9fS" secondAttribute="trailing" constant="18" id="hbB-M3-Py1"/>
+                            <constraint firstAttribute="bottom" secondItem="POH-gP-Eqv" secondAttribute="bottom" id="usH-5W-iWi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oEf-9d-ZLb"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="42C-hK-xG4"/>
+                    <connections>
+                        <outlet property="propertyTypesTableView" destination="POH-gP-Eqv" id="e9t-k3-ooY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VyJ-24-Iy7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="969.56521739130437" y="204.91071428571428"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="aY4-o4-lNO">
             <objects>
@@ -262,6 +359,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle" catalog="system" width="64" height="60"/>
+        <image name="checkmark.circle.fill" catalog="system" width="64" height="60"/>
         <image name="favoriteStar" width="25" height="25"/>
+        <image name="favoriteStarFilled" width="25" height="25"/>
     </resources>
 </document>

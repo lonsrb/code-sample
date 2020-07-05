@@ -11,6 +11,10 @@
 		EB5525C424B21C3700D18B7A /* CompassSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C324B21C3700D18B7A /* CompassSans-Bold.ttf */; };
 		EB5525C624B2226700D18B7A /* CompassSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */; };
 		EB5525C824B2367300D18B7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525C724B2367300D18B7A /* Constants.swift */; };
+		EB5525CA24B245A600D18B7A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525C924B245A600D18B7A /* FiltersViewController.swift */; };
+		EB5525CC24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */; };
+		EB5525CE24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */; };
+		EB5525D124B24BC900D18B7A /* FiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */; };
 		EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075924B0C43200EA2AE2 /* AppDelegate.swift */; };
 		EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */; };
 		EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */; };
@@ -51,6 +55,10 @@
 		EB5525C324B21C3700D18B7A /* CompassSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Bold.ttf"; sourceTree = "<group>"; };
 		EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Medium.ttf"; sourceTree = "<group>"; };
 		EB5525C724B2367300D18B7A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		EB5525C924B245A600D18B7A /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
+		EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterTableViewCell.swift; sourceTree = "<group>"; };
+		EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterViewModel.swift; sourceTree = "<group>"; };
+		EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewModel.swift; sourceTree = "<group>"; };
 		EB70075624B0C43200EA2AE2 /* CodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70075924B0C43200EA2AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +180,8 @@
 			children = (
 				EB70079124B0D09A00EA2AE2 /* ListingsViewModel.swift */,
 				EBB6A43724B1088400A6C75E /* ListingViewModel.swift */,
+				EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */,
+				EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -190,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */,
+				EB5525C924B245A600D18B7A /* FiltersViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -199,6 +210,7 @@
 			children = (
 				EB70075F24B0C43200EA2AE2 /* Main.storyboard */,
 				EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */,
+				EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -351,8 +363,12 @@
 				EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */,
 				EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */,
 				EBFA553324B0EC18002B2C36 /* PropertyType.swift in Sources */,
+				EB5525CC24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift in Sources */,
+				EB5525D124B24BC900D18B7A /* FiltersViewModel.swift in Sources */,
+				EB5525CA24B245A600D18B7A /* FiltersViewController.swift in Sources */,
 				EB70079224B0D09A00EA2AE2 /* ListingsViewModel.swift in Sources */,
 				EB70079424B0D0C700EA2AE2 /* ListingTableViewCell.swift in Sources */,
+				EB5525CE24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift in Sources */,
 				EB70079024B0D08200EA2AE2 /* NetworkingServiceProtocol.swift in Sources */,
 				EBB6A43824B1088400A6C75E /* ListingViewModel.swift in Sources */,
 				EB70079624B0D27200EA2AE2 /* ListingsService.swift in Sources */,

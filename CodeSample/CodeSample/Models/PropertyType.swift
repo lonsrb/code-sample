@@ -6,7 +6,7 @@
 //  Copyright © 2020 Ryan Lons. All rights reserved.
 //
 
-enum PropertyType : String, Codable {
+enum PropertyType : String, Codable, CaseIterable {
     case house = "House"
     case condo = "Condo"
     case townhouse = "Townhouse"

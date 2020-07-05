@@ -35,10 +35,6 @@ class ListingsViewController: UIViewController {
             self.listingsTableView.reloadData()
            }.store(in: &cancellables)
        }
-
-    @IBAction func filtersButtonTapped(_ sender: UIButton) {
-        print("filtersButtonTapped")
-    }
 }
 
 extension ListingsViewController :  UITableViewDataSource, UITableViewDelegate {
