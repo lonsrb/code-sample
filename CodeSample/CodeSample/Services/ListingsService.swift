@@ -17,11 +17,11 @@ class ListingsService {
         self.networkingService = networkingService
     }
 
-    func getListings(page: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
+    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
         
         guard let urlComponents = NSURLComponents(string: "http://localhost:9292/listings") else { return }
         
-        var queryItems = [URLQueryItem(name: "startIndex", value: String(pageSize * page)),
+        var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
                           URLQueryItem(name: "count", value: String(pageSize))]
         
         if let propertyTypeFilter = propertyTypeFilter {

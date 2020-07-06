@@ -226,6 +226,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="6Mg-mN-EWQ"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="KX0-rL-aU1"/>
+                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="DQR-Vk-w0H"/>
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXR-Dd-P2k">
