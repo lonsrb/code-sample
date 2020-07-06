@@ -18,6 +18,7 @@ class ListingTableViewCell: UITableViewCell {
     @IBOutlet weak var addressLine2Label: UILabel!
     
     @IBOutlet weak var subtitleTag: UIButton!
+    @IBOutlet weak var propertyTypeTag: UIButton!
     @IBOutlet weak var numberOfBedsLabel: UILabel!
     @IBOutlet weak var numberOfBathsLabel: UILabel!
     @IBOutlet weak var squareFootageLabel: UILabel!
@@ -35,6 +36,9 @@ class ListingTableViewCell: UITableViewCell {
         
         subtitleTag.contentEdgeInsets = UIEdgeInsets(top: 5, left: 7, bottom: 5, right: 7)
         subtitleTag.isHidden = true
+        
+        propertyTypeTag.contentEdgeInsets = subtitleTag.contentEdgeInsets
+        
         
         let gradient = CAGradientLayer()
         gradient.frame = listingThumbnail.bounds
@@ -57,8 +61,9 @@ class ListingTableViewCell: UITableViewCell {
         
         if listingViewModel.subtitleString != nil && listingViewModel.subtitleString!.count > 0 {
             subtitleTag.isHidden = false
-            subtitleTag.setTitle(listingViewModel.subtitleString?.uppercased(), for: .normal)
+        subtitleTag.setTitle(listingViewModel.subtitleString?.uppercased(), for: .normal)
         }
+        propertyTypeTag.setTitle(listingViewModel.propertyTypeString?.uppercased(), for: .normal)
         addressLine1Label.text = listingViewModel.addressLine1String
         addressLine2Label.text = listingViewModel.addressLine2String
         numberOfBedsLabel.text = listingViewModel.bedsString

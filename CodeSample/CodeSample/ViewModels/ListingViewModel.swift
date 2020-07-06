@@ -20,6 +20,7 @@ class ListingViewModel : ObservableObject, Identifiable {
     @Published var bedsString : String?
     @Published var sqFtString : String?
     @Published var thumbnailImage : UIImage?
+    @Published var propertyTypeString : String?
     
     private(set) var listing: Listing?
     
@@ -45,7 +46,7 @@ class ListingViewModel : ObservableObject, Identifiable {
     
     func update() {
         guard let listing = listing else { return }
-        
+        propertyTypeString = listing.propertyType.presentationString()
         subtitleString = listing.subTitle
         priceString = currenyFormmatter.string(from: NSNumber(integerLiteral: Int(listing.price)))
         addressLine1String = listing.address
@@ -68,7 +69,7 @@ class ListingViewModel : ObservableObject, Identifiable {
         
         if let fullBaths = listing.baths {
             bathsString = "\(fullBaths)"
-            if let halfBaths = listing.halfBaths {
+            if let halfBaths = listing.halfBaths, halfBaths > 0 {
                 if halfBaths == 1 {
                     bathsString! += ".5"
                 }
@@ -84,11 +85,21 @@ class ListingViewModel : ObservableObject, Identifiable {
             bathsString = "--"
         }
         
-        let url = URL(string: listing.thumbUrl)
+        guard let url = URL(string: listing.thumbUrl) else {
+            print("no url for: \(listing.thumbUrl)")
+            return
+        }
+        
+        //TODO: move this into the Network Serivice
         DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            guard let data = try? Data(contentsOf: url) else {
+                //should use a placeholder image here
+                return
+            }
+            
             DispatchQueue.main.async {
-                self.thumbnailImage = UIImage(data: data!)
+                self.thumbnailImage = UIImage(data: data)
             }
         }
         

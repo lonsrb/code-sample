@@ -16,7 +16,7 @@ class PropertyTypeFilterViewModel {
     
     init(propertyType : PropertyType) {
         self.propertyType = propertyType
-        propertyTypeString = propertyType.rawValue
+        propertyTypeString = propertyType.presentationString()
         isSelected = false
     }
 }

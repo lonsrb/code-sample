@@ -162,26 +162,45 @@
                                                         <constraint firstAttribute="height" constant="82.5" id="KxN-CI-r1r"/>
                                                     </constraints>
                                                 </stackView>
-                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-oK-l32">
-                                                    <rect key="frame" x="15" y="10" width="86" height="18"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ZHd-BC-EMP">
+                                                    <rect key="frame" x="15" y="10" width="189" height="18"/>
+                                                    <subviews>
+                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-oK-l32">
+                                                            <rect key="frame" x="0.0" y="0.0" width="86" height="18"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="IUy-Lx-hbl"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="CompassSans-Bold" family="Compass Sans" pointSize="12"/>
+                                                            <state key="normal" title="SUBTITLE TEXT">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jic-Yi-ZZm">
+                                                            <rect key="frame" x="95" y="0.0" width="94" height="18"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="FGO-sr-jba"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="CompassSans-Bold" family="Compass Sans" pointSize="12"/>
+                                                            <state key="normal" title="PROPERTY TYPE">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="IUy-Lx-hbl"/>
+                                                        <constraint firstAttribute="height" constant="18" id="l8f-il-60U"/>
+                                                        <constraint firstItem="jic-Yi-ZZm" firstAttribute="height" secondItem="HBZ-oK-l32" secondAttribute="height" id="ylC-uP-6BX"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="CompassSans-Bold" family="Compass Sans" pointSize="12"/>
-                                                    <state key="normal" title="SUBTITLE TEXT">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                </button>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="ZHd-BC-EMP" firstAttribute="top" secondItem="jiV-16-zwP" secondAttribute="top" constant="10" id="CYa-Yn-hST"/>
                                                 <constraint firstAttribute="trailing" secondItem="bgr-wg-aax" secondAttribute="trailing" id="FZp-qX-aX9"/>
-                                                <constraint firstItem="0JR-5M-pCT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HBZ-oK-l32" secondAttribute="trailing" constant="8" symbolic="YES" id="KaQ-jb-54C"/>
-                                                <constraint firstItem="HBZ-oK-l32" firstAttribute="top" secondItem="jiV-16-zwP" secondAttribute="top" constant="10" id="OF8-ET-Kde"/>
+                                                <constraint firstItem="ZHd-BC-EMP" firstAttribute="leading" secondItem="jiV-16-zwP" secondAttribute="leading" constant="15" id="Gt5-jS-vgJ"/>
                                                 <constraint firstItem="bgr-wg-aax" firstAttribute="leading" secondItem="jiV-16-zwP" secondAttribute="leading" id="YLj-24-37E"/>
                                                 <constraint firstAttribute="trailing" secondItem="OvF-fn-45f" secondAttribute="trailing" constant="15" id="Yyd-K3-2Gl"/>
                                                 <constraint firstItem="0JR-5M-pCT" firstAttribute="top" secondItem="jiV-16-zwP" secondAttribute="top" constant="10" id="b6c-eb-v81"/>
-                                                <constraint firstItem="HBZ-oK-l32" firstAttribute="leading" secondItem="jiV-16-zwP" secondAttribute="leading" constant="15" id="d4d-NZ-Be1"/>
                                                 <constraint firstAttribute="trailing" secondItem="0JR-5M-pCT" secondAttribute="trailing" constant="15" id="dXB-A2-l7Q"/>
                                                 <constraint firstItem="bgr-wg-aax" firstAttribute="top" secondItem="jiV-16-zwP" secondAttribute="top" id="ovF-v9-fVg"/>
                                                 <constraint firstAttribute="bottom" secondItem="OvF-fn-45f" secondAttribute="bottom" constant="15" id="qeF-gL-Z9e"/>
@@ -198,6 +217,7 @@
                                             <outlet property="numberOfBathsLabel" destination="vrn-57-739" id="bML-1q-Vo4"/>
                                             <outlet property="numberOfBedsLabel" destination="5Yb-lk-oB9" id="VpI-NX-TpM"/>
                                             <outlet property="priceLabel" destination="1KF-0H-J2D" id="a6G-Hh-BR0"/>
+                                            <outlet property="propertyTypeTag" destination="jic-Yi-ZZm" id="Hkp-La-cJV"/>
                                             <outlet property="squareFootageLabel" destination="ckh-sC-jIP" id="SVr-7S-GTD"/>
                                             <outlet property="subtitleTag" destination="HBZ-oK-l32" id="1hK-54-MpJ"/>
                                         </connections>

@@ -27,12 +27,20 @@ class ListingsViewController: UIViewController {
         
         filtersButton.layer.borderColor = UIColor.codeSampleGrayBorder().cgColor
         filtersButton.layer.borderWidth = 1
+        
+        //todo: add tests
+        //todo: add pull to refresh
+        //todo: add paging
+        //todo: POST favorite change
+        
     }
     
     private func bindViewModel(viewModel : ListingsViewModel) {
         viewModel.$listings.sink { [weak self] listings in
             guard let self = self else { return }
-            self.listingsTableView.reloadData()
+            DispatchQueue.main.async {
+                self.listingsTableView.reloadData()
+            }
            }.store(in: &cancellables)
        }
 }

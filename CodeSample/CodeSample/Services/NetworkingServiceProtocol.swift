@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+protocol NetworkingServiceProtocol {
+    func performUrlRequest(_ request : URLRequest,
+                           onResult: @escaping (Result<(URLResponse, Data), Error>) -> Void)
+}

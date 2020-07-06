@@ -15,6 +15,7 @@
 		EB5525CC24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */; };
 		EB5525CE24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */; };
 		EB5525D124B24BC900D18B7A /* FiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */; };
+		EB5525D324B2CA3200D18B7A /* MockNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */; };
 		EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075924B0C43200EA2AE2 /* AppDelegate.swift */; };
 		EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */; };
 		EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */; };
@@ -59,6 +60,7 @@
 		EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterTableViewCell.swift; sourceTree = "<group>"; };
 		EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterViewModel.swift; sourceTree = "<group>"; };
 		EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewModel.swift; sourceTree = "<group>"; };
+		EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkingService.swift; sourceTree = "<group>"; };
 		EB70075624B0C43200EA2AE2 /* CodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70075924B0C43200EA2AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				EB70078D24B0D06300EA2AE2 /* NetworkingService.swift */,
+				EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */,
 				EB70078F24B0D08200EA2AE2 /* NetworkingServiceProtocol.swift */,
 				EB70079524B0D27200EA2AE2 /* ListingsService.swift */,
 			);
@@ -359,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */,
+				EB5525D324B2CA3200D18B7A /* MockNetworkingService.swift in Sources */,
 				EB70079924B0D2F000EA2AE2 /* Listing.swift in Sources */,
 				EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */,
 				EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */,

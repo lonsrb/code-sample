@@ -9,47 +9,55 @@
 import Foundation
 
 class ListingsService {
-    class func tempGetDummyListings() -> [Listing] {
-        var listings = [Listing]()
-        listings.append(Listing(id: 11111,
-                                thumbUrl: "https://picsum.photos/id/1029/600/220.jpg",
-                                address: "123 Hire Ryan Ln",
-                                addressLine2: "Austin, TX, 78701",
-                                subTitle: "New Construction",
-                                price: 1200000,
-                                squareFootage: 2800,
-                                beds: 4,
-                                baths: 2,
-                                halfBaths: 1,
-                                isFavorited: false,
-                                propertyType: .house))
+    
+    private let networkingService : NetworkingServiceProtocol!
+    private let pageSize = 25
+    
+    init(networkingService : NetworkingServiceProtocol) {
+        self.networkingService = networkingService
+    }
+
+    func getListings(page: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
         
-        listings.append(Listing(id: 22222,
-                                thumbUrl: "https://picsum.photos/id/1040/600/220.jpg",
-                                address: "5432 New Swan Stone Way",
-                                addressLine2: "Austin, TX, 78701",
-                                subTitle: "Coming Soon!",
-                                price: 987000,
-                                squareFootage: 2100,
-                                beds: 3,
-                                baths: 2,
-                                halfBaths: nil,
-                                isFavorited: false,
-                                propertyType: .townhouse))
+        guard let urlComponents = NSURLComponents(string: "http://localhost:9292/listings") else { return }
         
-        listings.append(Listing(id: 33333,
-                                thumbUrl: "https://picsum.photos/id/10/600/220.jpg",
-                                address: "987 Aloha Pkwy",
-                                addressLine2: "Austin, TX, 78701",
-                                subTitle: nil,
-                                price: 600000,
-                                squareFootage: nil,
-                                beds: nil,
-                                baths: nil,
-                                halfBaths: nil,
-                                isFavorited: false,
-                                propertyType: .land))
+        var queryItems = [URLQueryItem(name: "startIndex", value: String(pageSize * page)),
+                          URLQueryItem(name: "count", value: String(pageSize))]
         
-        return listings
+        if let propertyTypeFilter = propertyTypeFilter {
+            let stringArray = propertyTypeFilter.map { $0.rawValue }
+            let filterQueryItem = URLQueryItem(name: "propertyType", value: stringArray.joined(separator: ","))
+            queryItems.append(filterQueryItem)
+        }
+        
+        urlComponents.queryItems = queryItems
+        
+        guard let url = urlComponents.url else {
+            assertionFailure() //we control the URL, it should make sense and never be nil here
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        networkingService.performUrlRequest(request) { result in
+            switch result {
+            case .success(_, let data):
+                do{
+                    let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
+                                       print(jsonResponse) //Response result
+                    
+                    let decoder = JSONDecoder()
+                    let listings = try decoder.decode([Listing].self, from: data)
+                    onCompletion(.success(listings))
+                } catch let parsingError {
+                    onCompletion(.failure(parsingError))
+                }
+                break
+            case .failure(let error):
+                onCompletion(.failure(error))
+                break
+            }
+        }
     }
 }
