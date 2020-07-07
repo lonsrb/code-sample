@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+enum NetworkingServiceError: Error {
+    case invalidUrl(String)
+}
+
 class NetworkingService : NetworkingServiceProtocol {
     static let shared: NetworkingService = NetworkingService()
     

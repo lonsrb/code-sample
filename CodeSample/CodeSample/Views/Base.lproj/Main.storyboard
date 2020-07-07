@@ -48,7 +48,11 @@
                                                         <constraint firstAttribute="width" constant="28" id="uoK-nl-L9M"/>
                                                     </constraints>
                                                     <state key="normal" image="favoriteStar"/>
+                                                    <state key="selected" image="favoriteStarFilled"/>
                                                     <state key="highlighted" image="favoriteStarFilled"/>
+                                                    <connections>
+                                                        <action selector="favoriteTapped:" destination="0ts-FI-GhW" eventType="touchUpInside" id="fSW-Ic-oVb"/>
+                                                    </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="bottom" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="OvF-fn-45f">
                                                     <rect key="frame" x="15" y="122.5" width="384" height="82.5"/>

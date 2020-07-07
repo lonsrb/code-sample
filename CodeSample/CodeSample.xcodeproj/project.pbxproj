@@ -12,10 +12,10 @@
 		EB5525C624B2226700D18B7A /* CompassSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */; };
 		EB5525C824B2367300D18B7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525C724B2367300D18B7A /* Constants.swift */; };
 		EB5525CA24B245A600D18B7A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525C924B245A600D18B7A /* FiltersViewController.swift */; };
-		EB5525CC24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */; };
 		EB5525CE24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */; };
 		EB5525D124B24BC900D18B7A /* FiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */; };
 		EB5525D324B2CA3200D18B7A /* MockNetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */; };
+		EB5525D524B4128300D18B7A /* FiltersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5525D424B4128300D18B7A /* FiltersService.swift */; };
 		EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075924B0C43200EA2AE2 /* AppDelegate.swift */; };
 		EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */; };
 		EB70075E24B0C43200EA2AE2 /* ListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB70075D24B0C43200EA2AE2 /* ListingsViewController.swift */; };
@@ -57,10 +57,10 @@
 		EB5525C524B2226700D18B7A /* CompassSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CompassSans-Medium.ttf"; sourceTree = "<group>"; };
 		EB5525C724B2367300D18B7A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		EB5525C924B245A600D18B7A /* FiltersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
-		EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterTableViewCell.swift; sourceTree = "<group>"; };
 		EB5525CD24B2465B00D18B7A /* PropertyTypeFilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyTypeFilterViewModel.swift; sourceTree = "<group>"; };
 		EB5525D024B24BC900D18B7A /* FiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewModel.swift; sourceTree = "<group>"; };
 		EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkingService.swift; sourceTree = "<group>"; };
+		EB5525D424B4128300D18B7A /* FiltersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersService.swift; sourceTree = "<group>"; };
 		EB70075624B0C43200EA2AE2 /* CodeSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB70075924B0C43200EA2AE2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,9 +146,9 @@
 			children = (
 				EB70079724B0D2DD00EA2AE2 /* Models */,
 				EB70078C24B0CFF200EA2AE2 /* Views */,
+				EB70078924B0CFB600EA2AE2 /* ViewModels */,
 				EB70078B24B0CFD800EA2AE2 /* Controllers */,
 				EB70078A24B0CFC400EA2AE2 /* Services */,
-				EB70078924B0CFB600EA2AE2 /* ViewModels */,
 				EB70075924B0C43200EA2AE2 /* AppDelegate.swift */,
 				EB70075B24B0C43200EA2AE2 /* SceneDelegate.swift */,
 				EB70076224B0C43400EA2AE2 /* Assets.xcassets */,
@@ -195,6 +195,7 @@
 				EB5525D224B2CA3200D18B7A /* MockNetworkingService.swift */,
 				EB70078F24B0D08200EA2AE2 /* NetworkingServiceProtocol.swift */,
 				EB70079524B0D27200EA2AE2 /* ListingsService.swift */,
+				EB5525D424B4128300D18B7A /* FiltersService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -213,7 +214,6 @@
 			children = (
 				EB70075F24B0C43200EA2AE2 /* Main.storyboard */,
 				EB70079324B0D0C700EA2AE2 /* ListingTableViewCell.swift */,
-				EB5525CB24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -367,7 +367,7 @@
 				EB70075A24B0C43200EA2AE2 /* AppDelegate.swift in Sources */,
 				EB70075C24B0C43200EA2AE2 /* SceneDelegate.swift in Sources */,
 				EBFA553324B0EC18002B2C36 /* PropertyType.swift in Sources */,
-				EB5525CC24B245D400D18B7A /* PropertyTypeFilterTableViewCell.swift in Sources */,
+				EB5525D524B4128300D18B7A /* FiltersService.swift in Sources */,
 				EB5525D124B24BC900D18B7A /* FiltersViewModel.swift in Sources */,
 				EB5525CA24B245A600D18B7A /* FiltersViewController.swift in Sources */,
 				EB70079224B0D09A00EA2AE2 /* ListingsViewModel.swift in Sources */,

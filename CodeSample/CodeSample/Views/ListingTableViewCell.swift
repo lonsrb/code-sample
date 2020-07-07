@@ -54,7 +54,9 @@ class ListingTableViewCell: UITableViewCell {
         
         listingViewModel.$thumbnailImage.sink { [weak self] image in
             guard let self = self else { return }
-            self.listingThumbnail.image = image
+            DispatchQueue.main.async {
+                self.listingThumbnail.image = image
+            }
         }.store(in: &cancellables)
         
         priceLabel.text = listingViewModel.priceString
@@ -69,14 +71,16 @@ class ListingTableViewCell: UITableViewCell {
         numberOfBedsLabel.text = listingViewModel.bedsString
         numberOfBathsLabel.text = listingViewModel.bathsString
         squareFootageLabel.text = listingViewModel.sqFtString
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
+        favoriteButton.isSelected = listingViewModel.isFavorite
     }
     
-    
-    
+    @IBAction func favoriteTapped(_ sender: Any) {
+        guard let listingViewModel = listingViewModel else {
+            assertionFailure("A cell should always be populated with a instance of ListingViewModel")
+            return
+        }
+        favoriteButton.isSelected = !favoriteButton.isSelected
+        listingViewModel.toogleFavoriteStatus()
+    }
 }

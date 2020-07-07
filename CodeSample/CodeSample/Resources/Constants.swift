@@ -14,3 +14,8 @@ extension UIColor {
         return UIColor(hue: 0, saturation: 0.0, brightness: 0.75, alpha: 1)
     }
 }
+
+
+extension NSNotification.Name {
+    static let FiltersUpdated = Notification.Name("FiltersUpdates")
+}

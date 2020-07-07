@@ -29,19 +29,16 @@ class FiltersViewController: UIViewController {
     }
     
     @IBAction func doneTapped(_ sender: UIButton) {
-        dismiss(animated: true) {
-            
+        if let selectedIndexPaths = propertyTypesTableView.indexPathsForSelectedRows {
+            let selectedRows = selectedIndexPaths.map { $0.row }
+            filtersViewModel.updateSelectedPropertyTypes(selectedIndices: selectedRows)
         }
+        else { //no rows selected which means don't filter, show everything
+            filtersViewModel.updateSelectedPropertyTypes(selectedIndices: [])
+        }
+        
+        dismiss(animated: true) {}
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension  FiltersViewController: UITableViewDelegate, UITableViewDataSource {
@@ -53,12 +50,17 @@ extension  FiltersViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PropertyTypeCell", for: indexPath)
         let viewModel = filtersViewModel.propertyTypeFilters[indexPath.row]
         cell.textLabel?.text = viewModel.propertyTypeString
-        cell.isSelected = viewModel.isSelected
-        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let viewModel = filtersViewModel.propertyTypeFilters[indexPath.row]
+        if viewModel.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableView.ScrollPosition.none)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
-    
 }

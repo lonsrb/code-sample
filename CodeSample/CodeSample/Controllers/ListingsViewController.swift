@@ -58,11 +58,17 @@ class ListingsViewController: UIViewController {
                     return
                 }
                 
+                let lastListingIndex = (listings.count-1)
+                guard self.listingsViewModel.addedListingsStartIndex < lastListingIndex else {
+                    //there are no more cells to "inifinite" load
+                    return
+                }
+                
                 self.listingsTableView.beginUpdates()
                 
                 //create an array of index paths to be inserted into table
                 var newIndexPathArray = [IndexPath]()
-                for i in self.listingsViewModel.addedListingsStartIndex...(listings.count-1) {
+                for i in self.listingsViewModel.addedListingsStartIndex...lastListingIndex {
                     newIndexPathArray.append(IndexPath(row: i, section: 0))
                 }
                 self.listingsTableView.insertRows(at: newIndexPathArray, with: .automatic)
@@ -97,6 +103,7 @@ extension ListingsViewController : UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let lastIndexPathRow = indexPaths.last?.row ?? 0
         if lastIndexPathRow > listingsViewModel.listings.count - 10 {
+            print("fetch next page")
           listingsViewModel.fetch(getNextPage: true)
         }
     }
