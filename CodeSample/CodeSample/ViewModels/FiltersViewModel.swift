@@ -13,6 +13,13 @@ class FiltersViewModel {
     func updateSelectedPropertyTypes(selectedIndices: [Int]) {
         
         let selectedPropertyTypes = selectedIndices.map { PropertyType.allCases[$0] }
+        let currentProptertyTypes = FiltersService.shared.getFilter()
+        
+        if currentProptertyTypes.elementsEqual(selectedPropertyTypes) {
+            print("filters didn't really change")
+            return
+        }
+        
         FiltersService.shared.saveFilter(propertyTypes: selectedPropertyTypes)
         
         NotificationCenter.default.post(name: NSNotification.Name.FiltersUpdated,

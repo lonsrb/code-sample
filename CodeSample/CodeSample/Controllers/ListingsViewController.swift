@@ -16,7 +16,7 @@ class ListingsViewController: UIViewController {
     private let refreshControl = UIRefreshControl()
     
     private var cancellables: Set<AnyCancellable> = []
-
+    
     @IBOutlet weak var filtersButton: UIButton!
     
     override func viewDidLoad() {
@@ -34,9 +34,6 @@ class ListingsViewController: UIViewController {
         filtersButton.layer.borderWidth = 1
         
         //todo: add tests
-        //todo: POST favorite change
-        //todo: move image load into network service
-        
     }
     
     @objc private func pullToRefresh(_ sender : Any){
@@ -52,31 +49,42 @@ class ListingsViewController: UIViewController {
                     self.refreshControl.endRefreshing()
                 }
                 
-                guard self.listingsViewModel.addedListingsStartIndex > 0 else {
-                    //we're not adding cells, its an empty table, so just create
-                    self.listingsTableView.reloadData()
+                let newCellsStartIndex = self.listingsViewModel.addedListingsStartIndex
+                
+                //if start index is equal to zero then we're not adding new cells to existing dataset
+                if newCellsStartIndex == 0 {
+                    self.setupTable()
                     return
                 }
                 
+                //if the index for new cells is greater than the total dataset,
+                //then there are no more cells to inifite load
                 let lastListingIndex = (listings.count-1)
-                guard self.listingsViewModel.addedListingsStartIndex < lastListingIndex else {
-                    //there are no more cells to "inifinite" load
+                guard newCellsStartIndex < lastListingIndex else {
                     return
                 }
-                
-                self.listingsTableView.beginUpdates()
                 
                 //create an array of index paths to be inserted into table
                 var newIndexPathArray = [IndexPath]()
-                for i in self.listingsViewModel.addedListingsStartIndex...lastListingIndex {
+                for i in newCellsStartIndex...lastListingIndex {
                     newIndexPathArray.append(IndexPath(row: i, section: 0))
                 }
-                self.listingsTableView.insertRows(at: newIndexPathArray, with: .automatic)
+                self.listingsTableView.beginUpdates()
+                self.listingsTableView.insertRows(at: newIndexPathArray, with: .none)
                 self.listingsTableView.endUpdates()
             }
-           }.store(in: &cancellables)
-       }
+        }.store(in: &cancellables)
+    }
+    
+    func setupTable() {
+        self.listingsTableView.reloadData()
+        if self.listingsViewModel.listings.count > 0 {
+            self.listingsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+        }
+    }
+    
 }
+
 
 extension ListingsViewController :  UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,7 +94,7 @@ extension ListingsViewController :  UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ListingCell",
                                                        for: indexPath) as? ListingTableViewCell else {
-            return UITableViewCell()
+                                                        return UITableViewCell()
         }
         
         cell.fillWithListing(listingViewModel: listingsViewModel.listings[indexPath.row])
@@ -104,7 +112,7 @@ extension ListingsViewController : UITableViewDataSourcePrefetching {
         let lastIndexPathRow = indexPaths.last?.row ?? 0
         if lastIndexPathRow > listingsViewModel.listings.count - 10 {
             print("fetch next page")
-          listingsViewModel.fetch(getNextPage: true)
+            listingsViewModel.fetch(getNextPage: true)
         }
     }
     

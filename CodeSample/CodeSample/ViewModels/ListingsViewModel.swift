@@ -34,20 +34,19 @@ class ListingsViewModel: ObservableObject  {
             assertionFailure("for this notification, there should always be a userinfo object with a propertyTypes key")
             return
         }
+        
         let newPropertyTypeFilters = userInfo["propertyTypes"] as? [PropertyType]
-        if let propertyTypeFilter = propertyTypeFilter,
-           let newPropertyTypeFilters = newPropertyTypeFilters,
-           propertyTypeFilter.elementsEqual(newPropertyTypeFilters) {
-              //nothing changed
-            //todo; fix error upon scrolling after selcting ne filter
-        }
-        else { //something changed, lets pop back to top of table
-            addedListingsStartIndex = 0
-        }
+        addedListingsStartIndex = 0
+        propertyTypeFilter = newPropertyTypeFilters
         fetch()
     }
 
     func fetch(getNextPage: Bool = false) {
+        guard !fetchInProgress else {
+            //make sure we dont already have a fetch in progress
+            return
+        }
+        
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
         
