@@ -86,8 +86,7 @@ class ListingViewModel : ObservableObject, Identifiable {
             bathsString = "--"
         }
       
-        let listingService = ListingsService(networkingService: NetworkingService.shared)
-        listingService.loadListingImage(thumbnailURL: listing.thumbUrl) { [weak self] (result) in
+        ListingsService.shared.loadListingImage(thumbnailURL: listing.thumbUrl) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let image):
@@ -107,8 +106,7 @@ class ListingViewModel : ObservableObject, Identifiable {
         listing.isFavorited = !listing.isFavorited
         isFavorite = listing.isFavorited
         
-        let listingService = ListingsService(networkingService: NetworkingService.shared)
-        listingService.favoriteListing(listingId: listing.id,
+        ListingsService.shared.favoriteListing(listingId: listing.id,
                                        isFavorite: listing.isFavorited) { (result) in
                                         switch result {
                                         case .success(()):

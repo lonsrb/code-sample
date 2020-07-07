@@ -11,14 +11,12 @@ import Combine
 
 class ListingsViewModel: ObservableObject  {
     @Published private(set) var listings: [ListingViewModel] = []
-    private let listingsService : ListingsService!
     
     var propertyTypeFilter : [PropertyType]?
     var fetchInProgress = false
     var addedListingsStartIndex = 0
     
     init() {
-        listingsService = ListingsService(networkingService: NetworkingService.shared)
         propertyTypeFilter = FiltersService.shared.getFilter()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(filtersChanged(notification:)),
@@ -50,7 +48,7 @@ class ListingsViewModel: ObservableObject  {
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
         
-        listingsService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter) { [weak self] (result) in
+        ListingsService.shared.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter) { [weak self] (result) in
             guard let self = self else {return}
             
             switch result {

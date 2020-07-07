@@ -9,13 +9,27 @@
 import Foundation
 import UIKit.UIImage
 
+private var _shared : ListingsService!
+
 class ListingsService {
     
-    private let networkingService : NetworkingServiceProtocol!
+    private var networkingService : NetworkingServiceProtocol!
+  
     private let pageSize = 25
     
-    init(networkingService : NetworkingServiceProtocol) {
+    private init(networkingService : NetworkingServiceProtocol) {
         self.networkingService = networkingService
+    }
+    
+    class var shared: ListingsService {
+        if _shared == nil {
+            print("error: shared called before setup")
+        }
+        return _shared
+    }
+    
+    class func setupShared(networkingService : NetworkingServiceProtocol) {
+        _shared = ListingsService(networkingService: networkingService)
     }
     
     func loadListingImage(thumbnailURL : String, onCompletion: @escaping (Result<UIImage, Error>) -> Void ) {
@@ -43,7 +57,7 @@ class ListingsService {
     }
     
     func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void) {
-        guard let urlComponents = NSURLComponents(string: "http://localhost:9292/favorite"),
+        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + "/favorite"),
             let url = urlComponents.url else {
                 assertionFailure("we control the URL, it should make sense and never be nil here")
                 return
@@ -77,7 +91,7 @@ class ListingsService {
     
     func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
         
-        guard let urlComponents = NSURLComponents(string: "http://localhost:9292/listings") else { return }
+        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + "/listings") else { return }
         
         var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
                           URLQueryItem(name: "count", value: String(pageSize))]
