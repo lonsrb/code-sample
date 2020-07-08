@@ -16,8 +16,12 @@ class ListingsViewModel: ObservableObject  {
     var fetchInProgress = false
     var addedListingsStartIndex = 0
     
-    init() {
-        propertyTypeFilter = FiltersService.shared.getFilter()
+    var listingService : ListingsServiceProtocol!
+    var filtersService : FiltersServiceProtocol!
+    
+    init(listingService : ListingsServiceProtocol, filtersService: FiltersServiceProtocol) {
+        self.listingService = listingService
+        propertyTypeFilter = filtersService.getFilter()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(filtersChanged(notification:)),
                                                name: Notification.Name.FiltersUpdated, object: nil)
@@ -48,12 +52,12 @@ class ListingsViewModel: ObservableObject  {
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
         
-        ListingsService.shared.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter) { [weak self] (result) in
+        listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter) { [weak self] (result) in
             guard let self = self else {return}
             
             switch result {
             case .success(let listingViewModels):
-                let newListings = listingViewModels.map {ListingViewModel(listing: $0) }
+                let newListings = listingViewModels.map {ListingViewModel(listing: $0, listingsService: self.listingService) }
                 if getNextPage {
                     self.listings.append(contentsOf: newListings)
                 }
@@ -67,7 +71,6 @@ class ListingsViewModel: ObservableObject  {
                 //but we should note it in analytics and possibly raise a visual error to the screen
             }
             
-            //prevent duplicate fetch calls during infinite scroll
             self.fetchInProgress = false
         }
     }

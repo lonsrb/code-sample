@@ -9,19 +9,24 @@
 import Foundation
 class FiltersViewModel {
     @Published private(set) var propertyTypeFilters = [PropertyTypeFilterViewModel]()
+    private var filtersService : FiltersServiceProtocol!
+    
+    init(filtersService : FiltersServiceProtocol) {
+        self.filtersService = filtersService
+    }
     
     func updateSelectedPropertyTypes(selectedIndices: [Int]) {
         
         let selectedPropertyTypes = selectedIndices.map { PropertyType.allCases[$0] }
-        let currentProptertyTypes = FiltersService.shared.getFilter()
+        let currentProptertyTypes = filtersService.getFilter()
         
         if currentProptertyTypes.elementsEqual(selectedPropertyTypes) {
             print("filters didn't really change")
             return
         }
         
-        FiltersService.shared.saveFilter(propertyTypes: selectedPropertyTypes)
-        
+        filtersService.saveFilter(propertyTypes: selectedPropertyTypes)
+        fetch()
         NotificationCenter.default.post(name: NSNotification.Name.FiltersUpdated,
                                         object: nil,
                                         userInfo: ["propertyTypes" : selectedPropertyTypes])
@@ -29,7 +34,7 @@ class FiltersViewModel {
     
     func fetch() {
         var propertyTypeFilters = [PropertyTypeFilterViewModel]()
-        let selectedPropertyTypes = FiltersService.shared.getFilter()
+        let selectedPropertyTypes = filtersService.getFilter()
         
         for propertyType in PropertyType.allCases {
             let viewModel = PropertyTypeFilterViewModel(propertyType: propertyType)

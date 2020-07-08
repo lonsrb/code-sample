@@ -8,13 +8,16 @@
 
 import Foundation
 
-class FiltersService {
+protocol FiltersServiceProtocol {
+    func saveFilter(propertyTypes: [PropertyType])
+    func getFilter() -> [PropertyType]
+}
+
+class FiltersService : FiltersServiceProtocol{
     
-    static let shared : FiltersService = FiltersService()
     private let propertyTypeKey = "PropertyType"
     
     func saveFilter(propertyTypes: [PropertyType]) {
-        
         let rawValueArray = propertyTypes.map { $0.rawValue }
         UserDefaults.standard.set(rawValueArray, forKey: propertyTypeKey)
     }

@@ -9,29 +9,21 @@
 import Foundation
 import UIKit.UIImage
 
-private var _shared : ListingsService!
+protocol ListingsServiceProtocol {
+    func loadListingImage(thumbnailURL : String, onCompletion: @escaping (Result<UIImage, Error>) -> Void )
+    func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void)
+    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void)
+}
 
-class ListingsService {
+class ListingsService : ListingsServiceProtocol {
     
     private var networkingService : NetworkingServiceProtocol!
-  
     private let pageSize = 25
     
-    private init(networkingService : NetworkingServiceProtocol) {
+    init(networkingService : NetworkingServiceProtocol) {
         self.networkingService = networkingService
     }
-    
-    class var shared: ListingsService {
-        if _shared == nil {
-            print("error: shared called before setup")
-        }
-        return _shared
-    }
-    
-    class func setupShared(networkingService : NetworkingServiceProtocol) {
-        _shared = ListingsService(networkingService: networkingService)
-    }
-    
+        
     func loadListingImage(thumbnailURL : String, onCompletion: @escaping (Result<UIImage, Error>) -> Void ) {
         guard let url = URL(string: thumbnailURL) else {
             onCompletion(.failure(NetworkingServiceError.invalidUrl(thumbnailURL)))
@@ -57,7 +49,7 @@ class ListingsService {
     }
     
     func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void) {
-        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + "/favorite"),
+        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.favorite),
             let url = urlComponents.url else {
                 assertionFailure("we control the URL, it should make sense and never be nil here")
                 return
@@ -76,10 +68,6 @@ class ListingsService {
         networkingService.performUrlRequest(request) { result in
             switch result {
             case .success(_,_):
-                //                if let jsonResponse = try? JSONSerialization.jsonObject(with: data, options: []) {
-                //                    print(jsonResponse) //Response result
-                //                }
-                
                 onCompletion(.success(()))
                 break
             case .failure(let error):
@@ -91,7 +79,7 @@ class ListingsService {
     
     func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
         
-        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + "/listings") else { return }
+        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.listings) else { return }
         
         var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
                           URLQueryItem(name: "count", value: String(pageSize))]

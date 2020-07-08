@@ -18,6 +18,7 @@ class MockNetworkingService : NetworkingServiceProtocol {
     
     private var jsonResponses = [String : String]()
     private var httpStatusCodeResponses = [String : Int]()
+    private var latencyForRequests = [String : Int]()
     
     func performUrlRequest(_ request: URLRequest, onResult: @escaping (Result<(URLResponse, Data), Error>) -> Void) {
         
@@ -37,6 +38,11 @@ class MockNetworkingService : NetworkingServiceProtocol {
                     foundMock = true
                     dataToReturn = data
             }
+        }
+        
+        if let latency = latencyForRequests[url.absoluteString] {
+            foundMock = true
+            sleep(UInt32(latency))
         }
         
         if let mockStatusCode = httpStatusCodeResponses[url.absoluteString] {
@@ -59,6 +65,10 @@ class MockNetworkingService : NetworkingServiceProtocol {
     
     public func registerHttpStatusCodeForUrl(url : String, code : Int) {
         httpStatusCodeResponses[url] = code
+    }
+    
+    public func registerLatencyForUrl(url : String, seconds : Int) {
+        latencyForRequests[url] = seconds
     }
     
     

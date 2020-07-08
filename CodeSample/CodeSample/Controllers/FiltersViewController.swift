@@ -12,7 +12,7 @@ class FiltersViewController: UIViewController {
 
     @IBOutlet weak var propertyTypesTableView: UITableView!
 
-    var filtersViewModel = FiltersViewModel()
+    var filtersViewModel = FiltersViewModel(filtersService: ApplicationConfiguration.shared.filtersService)
     
     override func viewDidLoad() {
         super.viewDidLoad()

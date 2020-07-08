@@ -6,12 +6,28 @@
 //  Copyright © 2020 Ryan Lons. All rights reserved.
 //
 
-struct ApplicationConfiguration {
+private var _shared : ApplicationConfiguration!
+
+class ApplicationConfiguration {
     
     static let hostUrl: String = "http://localhost:9292"
+    var listingsService : ListingsServiceProtocol!
+    var filtersService : FiltersServiceProtocol!
     
-    static func setup() {
+    static func configure() {
+        _shared = ApplicationConfiguration()
+    }
+    
+    private init() {
         let networkingService = NetworkingService.shared
-        ListingsService.setupShared(networkingService: networkingService)
+        listingsService = ListingsService(networkingService: networkingService)
+        filtersService = FiltersService()
+    }
+    
+    class var shared: ApplicationConfiguration {
+        if _shared == nil {
+            assertionFailure("error: shared must only be called after setup()")
+        }
+        return _shared
     }
 }

@@ -19,3 +19,8 @@ extension UIColor {
 extension NSNotification.Name {
     static let FiltersUpdated = Notification.Name("FiltersUpdates")
 }
+
+struct Endpoints {
+    static let favorite : String = "/favorite"
+    static let listings : String = "/listings"
+}

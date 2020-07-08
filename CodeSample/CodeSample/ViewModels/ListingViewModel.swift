@@ -27,9 +27,12 @@ class ListingViewModel : ObservableObject, Identifiable {
     
     private var currenyFormmatter : NumberFormatter!
     private var sqFootageFormatter : NumberFormatter!
+    private var listingsService : ListingsServiceProtocol!
     
-    init(listing : Listing) {
+    
+    init(listing : Listing, listingsService : ListingsServiceProtocol) {
         self.listing = listing
+        self.listingsService = listingsService
         
         currenyFormmatter = NumberFormatter()
         currenyFormmatter.usesGroupingSeparator = true
@@ -86,7 +89,7 @@ class ListingViewModel : ObservableObject, Identifiable {
             bathsString = "--"
         }
       
-        ListingsService.shared.loadListingImage(thumbnailURL: listing.thumbUrl) { [weak self] (result) in
+        listingsService.loadListingImage(thumbnailURL: listing.thumbUrl) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let image):
@@ -106,16 +109,16 @@ class ListingViewModel : ObservableObject, Identifiable {
         listing.isFavorited = !listing.isFavorited
         isFavorite = listing.isFavorited
         
-        ListingsService.shared.favoriteListing(listingId: listing.id,
-                                       isFavorite: listing.isFavorited) { (result) in
-                                        switch result {
-                                        case .success(()):
-                                            print("toggle favorite success")
-                                            break
-                                        case .failure(let error):
-                                            print("ERROR: while toggling favorite state:\(error.localizedDescription)")
-                                            break
-                                        }
+        listingsService.favoriteListing(listingId: listing.id,
+                                        isFavorite: listing.isFavorited) { (result) in
+                                            switch result {
+                                            case .success(()):
+                                                print("toggle favorite success")
+                                                break
+                                            case .failure(let error):
+                                                print("ERROR: while toggling favorite state:\(error.localizedDescription)")
+                                                break
+                                            }
         }
     }
 }

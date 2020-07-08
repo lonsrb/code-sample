@@ -21,7 +21,8 @@ class ListingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        listingsViewModel = ListingsViewModel()
+        listingsViewModel = ListingsViewModel(listingService: ApplicationConfiguration.shared.listingsService,
+                                              filtersService: ApplicationConfiguration.shared.filtersService)
         bindViewModel(viewModel: listingsViewModel!)
         listingsViewModel!.fetch()
         
