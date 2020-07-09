@@ -13,7 +13,6 @@ enum NetworkingServiceError: Error {
 }
 
 class NetworkingService : NetworkingServiceProtocol {
-    static let shared: NetworkingService = NetworkingService()
     
     //this seems like a straightforward passthrough, except this is the only
     //file in the project that uses URLSession which allows us to swap our

@@ -30,23 +30,4 @@ class ListingsViewModelTests: XCTestCase {
         }
         waitForExpectations(timeout: 4, handler: nil)
     }
-    
-    func createTestListing(id: String = "aaa",
-                           thumbUrl: String = "someUrl",
-                           address: String = "1234 Qwerty Ln",
-                           addressLine2: String = "Austin, TX 78701",
-                           subTitle: String? = nil,
-                           price: UInt32 = 1000000,
-                           squareFootage: UInt32? = nil,
-                           beds: UInt8? = nil,
-                           baths: UInt8? = nil,
-                           halfBaths: UInt8? = nil,
-                           isFavorited: Bool = false,
-                           propertyType: PropertyType = .house) -> ListingViewModel {
-        
-        let listing = Listing(id: id, thumbUrl: thumbUrl, address: address, addressLine2: addressLine2, subTitle: subTitle, price: price, squareFootage: squareFootage, beds: beds, baths: baths, halfBaths: halfBaths, isFavorited: isFavorited, propertyType: propertyType)
-        return ListingViewModel(listing: listing, listingsService: MockListingsService())
-    }
-  
-
 }

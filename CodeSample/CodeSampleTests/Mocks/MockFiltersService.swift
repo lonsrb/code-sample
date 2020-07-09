@@ -17,6 +17,4 @@ class MockFiltersService : FiltersServiceProtocol {
     func getFilter() -> [PropertyType] {
         return []
     }
-    
-    
 }

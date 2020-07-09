@@ -116,15 +116,5 @@ extension ListingsViewController : UITableViewDataSourcePrefetching {
             listingsViewModel.fetch(getNextPage: true)
         }
     }
-    
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= listingsViewModel.listings.count
-    }
-    
-    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
-        let indexPathsForVisibleRows = listingsTableView.indexPathsForVisibleRows ?? []
-        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
-        return Array(indexPathsIntersection)
-    }
 }
 

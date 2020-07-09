@@ -56,8 +56,8 @@ class ListingsViewModel: ObservableObject  {
             guard let self = self else {return}
             
             switch result {
-            case .success(let listingViewModels):
-                let newListings = listingViewModels.map {ListingViewModel(listing: $0, listingsService: self.listingService) }
+            case .success(let listingModels):
+                let newListings = listingModels.map {ListingViewModel(listing: $0, listingsService: self.listingService) }
                 if getNextPage {
                     self.listings.append(contentsOf: newListings)
                 }

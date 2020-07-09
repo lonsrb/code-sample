@@ -79,7 +79,10 @@ class ListingsService : ListingsServiceProtocol {
     
     func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
         
-        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.listings) else { return }
+        guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.listings) else {
+            assertionFailure("we control the URL, it should make sense and never be nil here")
+            return
+        }
         
         var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
                           URLQueryItem(name: "count", value: String(pageSize))]

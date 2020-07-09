@@ -20,7 +20,7 @@ class ApplicationConfiguration {
     }
     
     private init() {
-        let networkingService = NetworkingService.shared
+        let networkingService = NetworkingService()
         listingsService = ListingsService(networkingService: networkingService)
         filtersService = FiltersService()
     }

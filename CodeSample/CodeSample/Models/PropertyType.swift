@@ -29,22 +29,5 @@ enum PropertyType : String, Codable, CaseIterable {
         }
     }
     
-//    enum CodingKeys : String, CodingKey {
-//        case house = "house"
-//        case condo = "condo"
-//        case townhouse = "townhouse"
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        if let _ = try container.decode(String?.self, forKey: .house) {
-//            self = .house
-//        }
-//        else {
-//            self = .multiFamily
-//        }
-//        
-//    }
-//    
 }
 
