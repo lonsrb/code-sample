@@ -28,6 +28,5 @@ enum PropertyType : String, Codable, CaseIterable {
             return "Lot/Land"
         }
     }
-    
 }
 

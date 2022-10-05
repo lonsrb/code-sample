@@ -31,7 +31,7 @@ class ListingsViewModel: ObservableObject  {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc func filtersChanged(notification : Notification) {
+    @MainActor @objc func filtersChanged(notification : Notification) async {
         guard let userInfo = notification.userInfo else {
             assertionFailure("for this notification, there should always be a userinfo object with a propertyTypes key")
             return
@@ -40,10 +40,10 @@ class ListingsViewModel: ObservableObject  {
         let newPropertyTypeFilters = userInfo["propertyTypes"] as? [PropertyType]
         addedListingsStartIndex = 0
         propertyTypeFilter = newPropertyTypeFilters
-        fetch()
+        await fetch()
     }
 
-    func fetch(getNextPage: Bool = false) {
+    @MainActor func fetch(getNextPage: Bool = false) async {
         guard !fetchInProgress else {
             //make sure we dont already have a fetch in progress
             return
@@ -52,26 +52,14 @@ class ListingsViewModel: ObservableObject  {
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
         
-        listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter) { [weak self] (result) in
-            guard let self = self else {return}
-            
-            switch result {
-            case .success(let listingModels):
-                let newListings = listingModels.map {ListingViewModel(listing: $0, listingsService: self.listingService) }
-                if getNextPage {
-                    self.listings.append(contentsOf: newListings)
-                }
-                else {
-                    self.listings = newListings
-                }
-                self.addedListingsStartIndex = startIndex
-            case .failure(let error):
-                print(error.localizedDescription)
-                //we have failed to get listings from the server. for now we'll just print this
-                //but we should note it in analytics and possibly raise a visual error to the screen
-            }
-            
-            self.fetchInProgress = false
+        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
+        let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
+        if getNextPage {
+            self.listings.append(contentsOf: newListings)
         }
+        else {
+            self.listings = newListings
+        }
+        self.fetchInProgress = false
     }
 }

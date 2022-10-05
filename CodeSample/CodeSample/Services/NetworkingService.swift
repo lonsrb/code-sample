@@ -10,9 +10,11 @@ import Foundation
 
 enum NetworkingServiceError: Error {
     case invalidUrl(String)
+    case badResponse
 }
 
 class NetworkingService : NetworkingServiceProtocol {
+    
     
     //this seems like a straightforward passthrough, except this is the only
     //file in the project that uses URLSession which allows us to swap our

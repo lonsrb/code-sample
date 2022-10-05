@@ -7,12 +7,24 @@
 //
 
 import Foundation
-class FiltersViewModel {
-    @Published private(set) var propertyTypeFilters = [PropertyTypeFilterViewModel]()
+
+class FiltersViewModel: ObservableObject {
+    @Published var propertyTypeFilters = [PropertyTypeFilterViewModel]()
+    @Published var selectedFilters = Set<PropertyType>()
+    
     private var filtersService : FiltersServiceProtocol!
     
     init(filtersService : FiltersServiceProtocol) {
         self.filtersService = filtersService
+    }
+    
+    func persistSelectedFilters() {
+        let selectedPropertyTypes = selectedFilters.map { $0 }
+        filtersService.saveFilter(propertyTypes: selectedPropertyTypes)
+        fetch()
+        NotificationCenter.default.post(name: NSNotification.Name.FiltersUpdated,
+                                        object: nil,
+                                        userInfo: ["propertyTypes" : selectedPropertyTypes])
     }
     
     func updateSelectedPropertyTypes(selectedIndices: [Int]) {
@@ -44,5 +56,6 @@ class FiltersViewModel {
             propertyTypeFilters.append(viewModel)
         }
         self.propertyTypeFilters = propertyTypeFilters
+        selectedFilters = Set(self.propertyTypeFilters.compactMap { $0.isSelected ? $0.propertyType : nil })
     }
 }

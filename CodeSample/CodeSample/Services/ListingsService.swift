@@ -10,9 +10,9 @@ import Foundation
 import UIKit.UIImage
 
 protocol ListingsServiceProtocol {
-    func loadListingImage(thumbnailURL : String, onCompletion: @escaping (Result<UIImage, Error>) -> Void )
+    func loadListingImage(thumbnailURL : String) async throws -> UIImage
     func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void)
-    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void)
+    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?) async -> [Listing]
 }
 
 class ListingsService : ListingsServiceProtocol {
@@ -23,28 +23,19 @@ class ListingsService : ListingsServiceProtocol {
     init(networkingService : NetworkingServiceProtocol) {
         self.networkingService = networkingService
     }
-        
-    func loadListingImage(thumbnailURL : String, onCompletion: @escaping (Result<UIImage, Error>) -> Void ) {
+    
+    func loadListingImage(thumbnailURL : String) async throws -> UIImage {
         guard let url = URL(string: thumbnailURL) else {
-            onCompletion(.failure(NetworkingServiceError.invalidUrl(thumbnailURL)))
-            return
+            throw NetworkingServiceError.invalidUrl(thumbnailURL)
         }
         let request = URLRequest(url: url)
-        networkingService.performUrlRequest(request) { result in
-            switch result {
-            case .success(_, let data):
-                if let image = UIImage(data: data) {
-                    onCompletion(.success(image))
-                }
-                else {
-                    let image = UIImage(named: "NoImagePlaceholder")
-                    onCompletion(.success(image!))
-                }
-                break
-            case .failure(let error):
-                onCompletion(.failure(error))
-                break
-            }
+        let (data, _) = try await URLSession.shared.data(for: request)
+        if let image = UIImage(data: data) {
+            return image
+        }
+        else {
+            let placeHolder = UIImage(named: "NoImagePlaceholder")!
+            return placeHolder
         }
     }
     
@@ -67,7 +58,7 @@ class ListingsService : ListingsServiceProtocol {
         
         networkingService.performUrlRequest(request) { result in
             switch result {
-            case .success(_,_):
+            case .success((_,_)):
                 onCompletion(.success(()))
                 break
             case .failure(let error):
@@ -77,11 +68,11 @@ class ListingsService : ListingsServiceProtocol {
         }
     }
     
-    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
+    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?) async -> [Listing] {
         
         guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.listings) else {
             assertionFailure("we control the URL, it should make sense and never be nil here")
-            return
+            return []
         }
         
         var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
@@ -97,27 +88,19 @@ class ListingsService : ListingsServiceProtocol {
         
         guard let url = urlComponents.url else {
             assertionFailure() //we control the URL, it should make sense and never be nil here
-            return
+            return []
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        
-        networkingService.performUrlRequest(request) { result in
-            switch result {
-            case .success(_, let data):
-                do{
-                    let decoder = JSONDecoder()
-                    let listings = try decoder.decode([Listing].self, from: data)
-                    onCompletion(.success(listings))
-                } catch let parsingError {
-                    onCompletion(.failure(parsingError))
-                }
-                break
-            case .failure(let error):
-                onCompletion(.failure(error))
-                break
-            }
+        do {
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decoder = JSONDecoder()
+            let listings = try decoder.decode([Listing].self, from: data)
+            return listings
+        }
+        catch {
+            return []
         }
     }
 }

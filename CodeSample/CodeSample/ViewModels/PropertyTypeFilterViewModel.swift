@@ -9,8 +9,7 @@
 import Foundation
 
 class PropertyTypeFilterViewModel {
-    private var propertyType: PropertyType
-    
+    var propertyType: PropertyType
     var propertyTypeString : String!
     var isSelected: Bool!
     

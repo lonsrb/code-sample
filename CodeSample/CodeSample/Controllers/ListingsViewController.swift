@@ -21,24 +21,24 @@ class ListingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        listingsViewModel = ListingsViewModel(listingService: ApplicationConfiguration.shared.listingsService,
-                                              filtersService: ApplicationConfiguration.shared.filtersService)
-        bindViewModel(viewModel: listingsViewModel!)
-        listingsViewModel!.fetch()
-        
-        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-        listingsTableView.refreshControl = refreshControl
-        
-        listingsTableView.tableFooterView = UIView()
-        
-        filtersButton.layer.borderColor = UIColor.codeSampleGrayBorder().cgColor
-        filtersButton.layer.borderWidth = 1
+//        listingsViewModel = ListingsViewModel(listingService: ApplicationConfiguration.shared.listingsService,
+//                                              filtersService: ApplicationConfiguration.shared.filtersService)
+//        bindViewModel(viewModel: listingsViewModel!)
+//        listingsViewModel!.fetch()
+//
+//        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+//        listingsTableView.refreshControl = refreshControl
+//
+//        listingsTableView.tableFooterView = UIView()
+//
+//        filtersButton.layer.borderColor = UIColor.codeSampleGrayBorder().cgColor
+//        filtersButton.layer.borderWidth = 1
         
         //todo: add tests
     }
     
     @objc private func pullToRefresh(_ sender : Any){
-        listingsViewModel?.fetch()
+//        listingsViewModel?.fetch()
     }
     
     private func bindViewModel(viewModel : ListingsViewModel) {
@@ -113,7 +113,7 @@ extension ListingsViewController : UITableViewDataSourcePrefetching {
         let lastIndexPathRow = indexPaths.last?.row ?? 0
         if lastIndexPathRow > listingsViewModel.listings.count - 10 {
             print("fetch next page")
-            listingsViewModel.fetch(getNextPage: true)
+//            listingsViewModel.fetch(getNextPage: true)
         }
     }
 }

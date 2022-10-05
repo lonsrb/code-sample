@@ -10,8 +10,7 @@ import Foundation
 import Combine
 import UIKit.UIImage
 
-class ListingViewModel : ObservableObject, Identifiable {
-    
+@MainActor class ListingViewModel : ObservableObject, Identifiable {
     var subtitleString : String?
     var priceString : String?
     var addressLine1String : String?
@@ -19,7 +18,7 @@ class ListingViewModel : ObservableObject, Identifiable {
     var bathsString : String?
     var bedsString : String?
     var sqFtString : String?
-    @Published var thumbnailImage : UIImage?
+    @Published var thumbnailImage: UIImage = UIImage(named: "NoImagePlaceholder")!
     var propertyTypeString : String?
     var isFavorite : Bool = false
     
@@ -88,20 +87,18 @@ class ListingViewModel : ObservableObject, Identifiable {
         else {
             bathsString = "--"
         }
-      
-        listingsService.loadListingImage(thumbnailURL: listing.thumbUrl) { [weak self] (result) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let image):
-                self.thumbnailImage = image
-                break
-            case .failure(let error):
-                print("Error loading image: \(error.localizedDescription)")
-                //for now just print the error, ideally we'd have
-                //analytics to track these internal kinds of errors
-                break
-            }
+    }
+    
+    @MainActor func loadImage() async -> UIImage {
+        do {
+            self.thumbnailImage = try await listingsService.loadListingImage(thumbnailURL: listing.thumbUrl)
         }
+        catch {
+            print("Error loading image: \(error.localizedDescription)")
+            //for now just print the error, ideally we'd have
+            //analytics to track these internal kinds of errors
+        }
+        return self.thumbnailImage
     }
     
     func toogleFavoriteStatus() {
