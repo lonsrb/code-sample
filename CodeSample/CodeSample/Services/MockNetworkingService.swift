@@ -15,16 +15,13 @@ enum MockNetworkingServiceError: Error {
 }
 
 class MockNetworkingService : NetworkingServiceProtocol {
-    
     private var jsonResponses = [String : String]()
     private var httpStatusCodeResponses = [String : Int]()
     private var latencyForRequests = [String : Int]()
     
-    func performUrlRequest(_ request: URLRequest, onResult: @escaping (Result<(URLResponse, Data), Error>) -> Void) {
-        
+    func performUrlRequest(_ request: URLRequest) async throws -> (Data, URLResponse) {
         guard let url = request.url else {
-            onResult(.failure(MockNetworkingServiceError.noUrl))
-            return
+            throw MockNetworkingServiceError.noUrl
         }
         
         var foundMock = false
@@ -51,14 +48,13 @@ class MockNetworkingService : NetworkingServiceProtocol {
         }
         
         if !foundMock {
-            onResult(.failure(MockNetworkingServiceError.noMocksRegistered))
-            return
+            throw MockNetworkingServiceError.noMocksRegistered
         }
         
-        guard let httpResponse = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: "1.0", headerFields: nil) else { return onResult(.failure(MockNetworkingServiceError.responseFailed)) }
-        onResult(.success((httpResponse, dataToReturn)))
+        guard let httpResponse = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: "1.0", headerFields: nil) else { throw MockNetworkingServiceError.responseFailed }
+        return (dataToReturn, httpResponse)
     }
-    
+  
     public func registerJsonFileForUrl(url : String, filePath : String) {
         jsonResponses[url] = filePath
     }
@@ -70,6 +66,4 @@ class MockNetworkingService : NetworkingServiceProtocol {
     public func registerLatencyForUrl(url : String, seconds : Int) {
         latencyForRequests[url] = seconds
     }
-    
-    
 }

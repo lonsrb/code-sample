@@ -8,16 +8,12 @@
 
 import Foundation
 import UIKit.UIColor
+import SwiftUI
 
-extension UIColor {
-    class func codeSampleGrayBorder() -> UIColor {
-        return UIColor(hue: 0, saturation: 0.0, brightness: 0.75, alpha: 1)
+extension Color {
+    static func codeSampleGrayBorder() -> Color {
+        return Color(hue: 0, saturation: 0.0, brightness: 0.75)
     }
-}
-
-
-extension NSNotification.Name {
-    static let FiltersUpdated = Notification.Name("FiltersUpdates")
 }
 
 struct Endpoints {

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct Filters: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var viewModel = FiltersViewModel(filtersService: ApplicationConfiguration.shared.filtersService)
+    @StateObject private var viewModel = FiltersViewModel(filtersService: ApplicationConfiguration.shared.filtersService,
+                                                          listingsService: ApplicationConfiguration.shared.listingsService)
     
     var body: some View {
         NavigationView {

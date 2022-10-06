@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit.UIImage
 
-@MainActor class ListingViewModel : ObservableObject, Identifiable {
+class ListingViewModel : ObservableObject, Identifiable {
     var subtitleString : String?
     var priceString : String?
     var addressLine1String : String?
@@ -19,8 +19,9 @@ import UIKit.UIImage
     var bedsString : String?
     var sqFtString : String?
     @Published var thumbnailImage: UIImage = UIImage(named: "NoImagePlaceholder")!
+    @Published var favoriteButtonImage: UIImage = UIImage(named: "favoriteStar")!
     var propertyTypeString : String?
-    var isFavorite : Bool = false
+    @Published var isFavorite : Bool = false
     
     private(set) var listing: Listing
     
@@ -55,6 +56,10 @@ import UIKit.UIImage
         addressLine2String = listing.addressLine2
         isFavorite = listing.isFavorited
         
+        $isFavorite.map {
+            return UIImage(named: $0 ? "favoriteStarFilled" : "favoriteStar")!
+        }.assign(to: &$favoriteButtonImage)
+        
         if let beds = listing.beds {
             bedsString = "\(beds)"
         }
@@ -63,7 +68,7 @@ import UIKit.UIImage
         }
         
         if let sqFt = listing.squareFootage,
-            let formattedString = sqFootageFormatter.string(from: NSNumber(integerLiteral: Int(sqFt))){
+           let formattedString = sqFootageFormatter.string(from: NSNumber(integerLiteral: Int(sqFt))){
             sqFtString = formattedString
         }
         else {
@@ -94,28 +99,26 @@ import UIKit.UIImage
             self.thumbnailImage = try await listingsService.loadListingImage(thumbnailURL: listing.thumbUrl)
         }
         catch {
-            print("Error loading image: \(error.localizedDescription)")
-            //for now just print the error, ideally we'd have
+            //for now do nothing with the error, ideally we'd have
             //analytics to track these internal kinds of errors
         }
         return self.thumbnailImage
     }
     
-    func toogleFavoriteStatus() {
-        
+    func toogleFavoriteStatus() async {
         listing.isFavorited = !listing.isFavorited
-        isFavorite = listing.isFavorited
+        Just(listing.isFavorited).assign(to: &$isFavorite)
         
-        listingsService.favoriteListing(listingId: listing.id,
-                                        isFavorite: listing.isFavorited) { (result) in
-                                            switch result {
-                                            case .success(()):
-                                                print("toggle favorite success")
-                                                break
-                                            case .failure(let error):
-                                                print("ERROR: while toggling favorite state:\(error.localizedDescription)")
-                                                break
-                                            }
+        do {
+            try await listingsService.favoriteListing(listingId: listing.id,
+                                                      isFavorite: listing.isFavorited)
+            print("toggle favorite success")
+        }
+        catch {
+            print("ERROR: while toggling favorite state:\(error.localizedDescription)")
+            //for now just print the error, ideally we'd have
+            //analytics to track these internal kinds of errors
+            //and also either feedback to the user or auto retrys
         }
     }
 }

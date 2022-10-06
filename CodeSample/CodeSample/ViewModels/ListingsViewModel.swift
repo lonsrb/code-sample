@@ -10,7 +10,8 @@ import Foundation
 import Combine
 
 class ListingsViewModel: ObservableObject  {
-    @Published private(set) var listings: [ListingViewModel] = []
+    @Published var listings: [ListingViewModel] = []
+    @Published var shouldScrollToTop: Bool = false
     
     var propertyTypeFilter : [PropertyType]?
     var fetchInProgress = false
@@ -19,28 +20,21 @@ class ListingsViewModel: ObservableObject  {
     var listingService : ListingsServiceProtocol!
     var filtersService : FiltersServiceProtocol!
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init(listingService : ListingsServiceProtocol, filtersService: FiltersServiceProtocol) {
         self.listingService = listingService
         propertyTypeFilter = filtersService.getFilter()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(filtersChanged(notification:)),
-                                               name: Notification.Name.FiltersUpdated, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @MainActor @objc func filtersChanged(notification : Notification) async {
-        guard let userInfo = notification.userInfo else {
-            assertionFailure("for this notification, there should always be a userinfo object with a propertyTypes key")
-            return
-        }
         
-        let newPropertyTypeFilters = userInfo["propertyTypes"] as? [PropertyType]
-        addedListingsStartIndex = 0
-        propertyTypeFilter = newPropertyTypeFilters
-        await fetch()
+        listingService.listingsSubject
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] listingModels in
+                guard let self = self else { return }
+                let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
+                Just(true).assign(to: &self.$shouldScrollToTop)
+                Just(newListings).assign(to: &self.$listings)
+            })
+            .store(in: &cancellables)
     }
 
     @MainActor func fetch(getNextPage: Bool = false) async {
@@ -51,15 +45,23 @@ class ListingsViewModel: ObservableObject  {
         
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
+        _ = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
         
-        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
-        let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
-        if getNextPage {
-            self.listings.append(contentsOf: newListings)
-        }
-        else {
-            self.listings = newListings
-        }
+        
+        //todo figure inifinte scroll now that we're using a publisher
+//        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter:
+        
+//        let startIndex = getNextPage ? listings.count : 0
+//
+//        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
+//        let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
+//        if getNextPage {
+//            self.listings.append(contentsOf: newListings)
+//        }
+//        else {
+//            self.listings = newListings
+//        }
+        
         self.fetchInProgress = false
     }
 }

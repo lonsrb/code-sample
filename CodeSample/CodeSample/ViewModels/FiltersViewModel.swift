@@ -12,24 +12,16 @@ class FiltersViewModel: ObservableObject {
     @Published var propertyTypeFilters = [PropertyTypeFilterViewModel]()
     @Published var selectedFilters = Set<PropertyType>()
     
-    private var filtersService : FiltersServiceProtocol!
+    private var filtersService: FiltersServiceProtocol!
+    private var listingsService: ListingsServiceProtocol!
     
-    init(filtersService : FiltersServiceProtocol) {
+    init(filtersService: FiltersServiceProtocol, listingsService: ListingsServiceProtocol) {
         self.filtersService = filtersService
+        self.listingsService = listingsService
     }
     
     func persistSelectedFilters() {
-        let selectedPropertyTypes = selectedFilters.map { $0 }
-        filtersService.saveFilter(propertyTypes: selectedPropertyTypes)
-        fetch()
-        NotificationCenter.default.post(name: NSNotification.Name.FiltersUpdated,
-                                        object: nil,
-                                        userInfo: ["propertyTypes" : selectedPropertyTypes])
-    }
-    
-    func updateSelectedPropertyTypes(selectedIndices: [Int]) {
-        
-        let selectedPropertyTypes = selectedIndices.map { PropertyType.allCases[$0] }
+        let selectedPropertyTypes = selectedFilters.map { $0 }//converts set to array
         let currentProptertyTypes = filtersService.getFilter()
         
         if currentProptertyTypes.elementsEqual(selectedPropertyTypes) {
@@ -39,9 +31,11 @@ class FiltersViewModel: ObservableObject {
         
         filtersService.saveFilter(propertyTypes: selectedPropertyTypes)
         fetch()
-        NotificationCenter.default.post(name: NSNotification.Name.FiltersUpdated,
-                                        object: nil,
-                                        userInfo: ["propertyTypes" : selectedPropertyTypes])
+        
+        Task {
+            print("filters say get new listings")
+            _ = await listingsService.getListings(startIndex: 0, propertyTypeFilter: selectedPropertyTypes)
+        }
     }
     
     func fetch() {

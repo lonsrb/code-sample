@@ -9,6 +9,5 @@
 import Foundation
 
 protocol NetworkingServiceProtocol {
-    func performUrlRequest(_ request : URLRequest,
-                           onResult: @escaping (Result<(URLResponse, Data), Error>) -> Void)
+    func performUrlRequest(_ request : URLRequest) async throws -> (Data, URLResponse)
 }

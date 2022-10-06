@@ -8,15 +8,18 @@
 
 import Foundation
 import UIKit.UIImage
+import Combine
 
 protocol ListingsServiceProtocol {
+    var listingsSubject: PassthroughSubject<[Listing], Never> { get }
     func loadListingImage(thumbnailURL : String) async throws -> UIImage
-    func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void)
+    func favoriteListing(listingId : String, isFavorite: Bool) async throws
     func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?) async -> [Listing]
 }
 
 class ListingsService : ListingsServiceProtocol {
     
+    var listingsSubject = PassthroughSubject<[Listing], Never>()
     private var networkingService : NetworkingServiceProtocol!
     private let pageSize = 25
     
@@ -29,7 +32,7 @@ class ListingsService : ListingsServiceProtocol {
             throw NetworkingServiceError.invalidUrl(thumbnailURL)
         }
         let request = URLRequest(url: url)
-        let (data, _) = try await URLSession.shared.data(for: request)
+        let (data, _) = try await networkingService.performUrlRequest(request)
         if let image = UIImage(data: data) {
             return image
         }
@@ -39,42 +42,25 @@ class ListingsService : ListingsServiceProtocol {
         }
     }
     
-    func favoriteListing(listingId : String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void) {
+    func favoriteListing(listingId : String, isFavorite: Bool) async throws {
         guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.favorite),
             let url = urlComponents.url else {
                 assertionFailure("we control the URL, it should make sense and never be nil here")
                 return
         }
-        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let parameters = ["listingId": listingId, "isFavorite": String(isFavorite)]
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        }
-        catch let error {
-            onCompletion(.failure(error))
-        }
-        
-        networkingService.performUrlRequest(request) { result in
-            switch result {
-            case .success((_,_)):
-                onCompletion(.success(()))
-                break
-            case .failure(let error):
-                onCompletion(.failure(error))
-                break
-            }
-        }
+        request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        _ = try await networkingService.performUrlRequest(request)
     }
-    
+        
     func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?) async -> [Listing] {
         
         guard let urlComponents = NSURLComponents(string: ApplicationConfiguration.hostUrl + Endpoints.listings) else {
             assertionFailure("we control the URL, it should make sense and never be nil here")
             return []
         }
-        
         var queryItems = [URLQueryItem(name: "startIndex", value: String(startIndex)),
                           URLQueryItem(name: "count", value: String(pageSize))]
         
@@ -94,12 +80,14 @@ class ListingsService : ListingsServiceProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         do {
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data, _) = try await networkingService.performUrlRequest(request)
             let decoder = JSONDecoder()
             let listings = try decoder.decode([Listing].self, from: data)
+            listingsSubject.send(listings)
             return listings
         }
         catch {
+            print("there was an error decoding the listing results")
             return []
         }
     }

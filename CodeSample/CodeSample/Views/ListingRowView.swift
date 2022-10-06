@@ -13,6 +13,7 @@ struct ListRow: View {
     
     var listingViewModel: ListingViewModel
     @State var image: UIImage = UIImage(named: "NoImagePlaceholder")!
+    @State var favoriteButtonImage: UIImage = UIImage(named: "favoriteStar")!
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -40,6 +41,18 @@ struct ListRow: View {
                             .padding(EdgeInsets(top: 1, leading: 3, bottom: 1, trailing: 3))
                             .foregroundColor(Color.white)
                             .background(Color.black)
+                    }
+                    Spacer()
+                    Button {
+                        Task {
+                            await listingViewModel.toogleFavoriteStatus()
+                        }
+                    } label: {
+                        Image(uiImage: favoriteButtonImage)
+                            
+                            .onReceive(listingViewModel.$favoriteButtonImage) { image in
+                                favoriteButtonImage = image
+                            }
                     }
                 }
                 Spacer()

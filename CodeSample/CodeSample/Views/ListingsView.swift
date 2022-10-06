@@ -16,24 +16,38 @@ struct Listings: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.listings, id:\.id) { listingViewModel in
-                    ListRow(listingViewModel: listingViewModel)
-                        .listRowInsets(EdgeInsets())
-                }
-            }
-            .listStyle(GroupedListStyle())
-            .navigationBarTitle("", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Filters") {
-                        showingFilters.toggle()
-                    }
-                    .fullScreenCover(isPresented: $showingFilters) {
-                        Filters()
+            ScrollViewReader { scrollViewReader in
+                List {
+                    ForEach(viewModel.listings, id:\.id) { listingViewModel in
+                        ListRow(listingViewModel: listingViewModel)
+                            .listRowInsets(EdgeInsets())
+                            .id(listingViewModel.id)
                     }
                 }
-            }
+                .listStyle(GroupedListStyle())
+                .navigationBarTitle("", displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            showingFilters.toggle()
+                        } label: {
+                            Text("Filters")
+                                .padding(EdgeInsets(top: 3, leading: 7, bottom: 3, trailing: 7))
+                                .border(Color.codeSampleGrayBorder(), width: 1)
+                        }
+                        
+                        .fullScreenCover(isPresented: $showingFilters) {
+                            Filters()
+                        }
+                    }
+                }
+                .onReceive(viewModel.$shouldScrollToTop) { shouldScroll in
+                    if shouldScroll, let listViewModel: ListingViewModel = viewModel.listings.first {
+                        scrollViewReader.scrollTo(listViewModel.id, anchor: .top)
+                    }
+                }
+            }//ends scroll reader
+            
         }
         .task {
             await viewModel.fetch()

@@ -13,6 +13,10 @@ protocol FiltersServiceProtocol {
     func getFilter() -> [PropertyType]
 }
 
+//this service is saving data locally in user defaults
+//the reason its extracted out is so it could be switched
+//to a GraphQL or REST implementation and the consuming code
+//would need minimal refactoring
 class FiltersService : FiltersServiceProtocol{
     
     private let propertyTypeKey = "PropertyType"
