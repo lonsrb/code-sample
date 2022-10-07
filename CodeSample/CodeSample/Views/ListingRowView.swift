@@ -34,7 +34,7 @@ struct ListRow: View {
                         .padding(EdgeInsets(top: 1, leading: 5, bottom: 1, trailing: 5))
                         .foregroundColor(Color.white)
                         .background(Color.black)
-                        
+                    
                     if (listingViewModel.subtitleString?.isEmpty == false) {
                         Text(listingViewModel.subtitleString!)
                             .font(Font.custom("CompassSans-Bold", size: 12))
@@ -49,7 +49,7 @@ struct ListRow: View {
                         }
                     } label: {
                         Image(uiImage: favoriteButtonImage)
-                            
+                        
                             .onReceive(listingViewModel.$favoriteButtonImage) { image in
                                 favoriteButtonImage = image
                             }
@@ -109,7 +109,7 @@ struct ListRow: View {
                                                                          opacity: 0.7)]),
                                startPoint: UnitPoint(x: 0, y: 0.4),
                                endPoint: UnitPoint(x: 0, y: 1))
-                )//ends vstack
+            )//ends vstack
         }//ends zstack
         .frame(height: 220)
         .padding(0)

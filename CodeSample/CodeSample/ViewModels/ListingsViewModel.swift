@@ -16,6 +16,7 @@ class ListingsViewModel: ObservableObject  {
     var propertyTypeFilter : [PropertyType]?
     var fetchInProgress = false
     var addedListingsStartIndex = 0
+    private var loadingNextPage = false
     
     var listingService : ListingsServiceProtocol!
     var filtersService : FiltersServiceProtocol!
@@ -30,38 +31,46 @@ class ListingsViewModel: ObservableObject  {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] listingModels in
                 guard let self = self else { return }
+                
                 let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
-                Just(true).assign(to: &self.$shouldScrollToTop)
+                if !self.loadingNextPage {
+                    Just(true).assign(to: &self.$shouldScrollToTop)
+                }
                 Just(newListings).assign(to: &self.$listings)
+                self.loadingNextPage = false
+                self.fetchInProgress = false
             })
             .store(in: &cancellables)
     }
-
-    @MainActor func fetch(getNextPage: Bool = false) async {
+    
+    func loadNextPageIfNeeded(currentItem item: ListingViewModel) {
         guard !fetchInProgress else {
             //make sure we dont already have a fetch in progress
             return
         }
         
+        let index = listings.firstIndex { vm in
+            vm.id == item.id
+        }
+        guard let listingIndex = index else { return }
+        
+        let distanceFromEndOfList = (listings.count - listingIndex) - 1
+        if distanceFromEndOfList <= 5 {
+            loadingNextPage = true
+            fetch(getNextPage: true)
+        }
+    }
+    
+    func fetch(getNextPage: Bool = false) {
+        guard !fetchInProgress else {
+            //make sure we dont already have a fetch in progress
+            return
+        }
+        loadingNextPage = getNextPage
         fetchInProgress = true
         let startIndex = getNextPage ? listings.count : 0
-        _ = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
-        
-        
-        //todo figure inifinte scroll now that we're using a publisher
-//        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter:
-        
-//        let startIndex = getNextPage ? listings.count : 0
-//
-//        let listingModels = await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
-//        let newListings = listingModels.map { ListingViewModel(listing: $0, listingsService: self.listingService) }
-//        if getNextPage {
-//            self.listings.append(contentsOf: newListings)
-//        }
-//        else {
-//            self.listings = newListings
-//        }
-        
-        self.fetchInProgress = false
+        Task {
+            await listingService.getListings(startIndex: startIndex, propertyTypeFilter: propertyTypeFilter)
+        }
     }
 }

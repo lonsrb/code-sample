@@ -6,26 +6,30 @@
 //  Copyright © 2020 Ryan Lons. All rights reserved.
 //
 
-
 import UIKit.UIImage
+import Combine
+import Foundation
 @testable import CodeSample
 
 class MockListingsService : ListingsServiceProtocol {
-    func loadListingImage(thumbnailURL: String, onCompletion: @escaping (Result<UIImage, Error>) -> Void) {
+    var listingsSubject = PassthroughSubject<[CodeSample.Listing], Never>()
+    
+    func loadListingImage(thumbnailURL: String) async throws -> UIImage {
+        return UIImage(named: "NoImagePlaceholder")!
+    }
+    
+    func favoriteListing(listingId: String, isFavorite: Bool) async throws {
         
     }
     
-    func favoriteListing(listingId: String, isFavorite: Bool, onCompletion: @escaping (Result<Void, Error>) -> Void) {
-        
-    }
-    
-    func getListings(startIndex: Int, propertyTypeFilter: [PropertyType]?, onCompletion: @escaping (Result<[Listing], Error>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+    func getListings(startIndex: Int, propertyTypeFilter: [CodeSample.PropertyType]?) async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
             let listing = self.createTestListing()
-            onCompletion(.success([listing]))
-        }
+            self.listingsSubject.send([listing])
+        })
+        
     }
-    
+  
     func createTestListing(id: String = "aaa",
                            thumbUrl: String = "someUrl",
                            address: String = "1234 Qwerty Ln",
@@ -42,6 +46,4 @@ class MockListingsService : ListingsServiceProtocol {
         let listing = Listing(id: id, thumbUrl: thumbUrl, address: address, addressLine2: addressLine2, subTitle: subTitle, price: price, squareFootage: squareFootage, beds: beds, baths: baths, halfBaths: halfBaths, isFavorited: isFavorited, propertyType: propertyType)
         return listing
     }
-    
-    
 }

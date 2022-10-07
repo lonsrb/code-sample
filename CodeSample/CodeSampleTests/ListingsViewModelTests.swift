@@ -18,16 +18,12 @@ class ListingsViewModelTests: XCTestCase {
         mockFiltersService = MockFiltersService()
     }
     
-    func testEnsureNoBouncedFetches() {
+    func testEnsureNoBouncedFetches() async throws {
         let listingsVM = ListingsViewModel(listingService: mockListingsService, filtersService: mockFiltersService)
         XCTAssert(listingsVM.fetchInProgress == false )
+            
         listingsVM.fetch()
+        
         XCTAssert(listingsVM.fetchInProgress == true )
-        let expect = expectation(description: "AsyncAction")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            XCTAssert(listingsVM.fetchInProgress == false )
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 4, handler: nil)
     }
 }

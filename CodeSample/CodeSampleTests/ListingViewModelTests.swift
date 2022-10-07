@@ -102,10 +102,10 @@ class ListingViewModelTests: XCTestCase {
         let result = listingVM.sqFtString
         XCTAssert(result == "9,001", "unexpected result: \(String(describing: result))")
     }
-    func testToogleFavoriteStatus() {
+    func testToogleFavoriteStatus() async throws {
         let listingVM = createTestListing()
         XCTAssert(listingVM.isFavorite == false)
-        listingVM.toogleFavoriteStatus()
+        await listingVM.toogleFavoriteStatus()
         XCTAssert(listingVM.isFavorite == true)
         XCTAssert(listingVM.listing.isFavorited == true)
     }

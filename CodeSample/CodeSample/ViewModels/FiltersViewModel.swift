@@ -22,18 +22,16 @@ class FiltersViewModel: ObservableObject {
     
     func persistSelectedFilters() {
         let selectedPropertyTypes = selectedFilters.map { $0 }//converts set to array
-        let currentProptertyTypes = filtersService.getFilter()
+        let currentPropertyTypes = filtersService.getFilter()
         
-        if currentProptertyTypes.elementsEqual(selectedPropertyTypes) {
-            print("filters didn't really change")
-            return
+        if currentPropertyTypes.elementsEqual(selectedPropertyTypes) {
+            return //filters didn't really change
         }
         
         filtersService.saveFilter(propertyTypes: selectedPropertyTypes)
         fetch()
         
-        Task {
-            print("filters say get new listings")
+        Task { //filters say get new listings
             _ = await listingsService.getListings(startIndex: 0, propertyTypeFilter: selectedPropertyTypes)
         }
     }

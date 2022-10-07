@@ -105,7 +105,7 @@ class ListingViewModel : ObservableObject, Identifiable {
         return self.thumbnailImage
     }
     
-    func toogleFavoriteStatus() async {
+    @MainActor func toogleFavoriteStatus() async {
         listing.isFavorited = !listing.isFavorited
         Just(listing.isFavorited).assign(to: &$isFavorite)
         

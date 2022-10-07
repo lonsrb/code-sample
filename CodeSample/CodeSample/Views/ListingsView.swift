@@ -16,41 +16,49 @@ struct Listings: View {
     
     var body: some View {
         NavigationView {
-            ScrollViewReader { scrollViewReader in
-                List {
-                    ForEach(viewModel.listings, id:\.id) { listingViewModel in
-                        ListRow(listingViewModel: listingViewModel)
-                            .listRowInsets(EdgeInsets())
-                            .id(listingViewModel.id)
-                    }
-                }
-                .listStyle(GroupedListStyle())
-                .navigationBarTitle("", displayMode: .inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            showingFilters.toggle()
-                        } label: {
-                            Text("Filters")
-                                .padding(EdgeInsets(top: 3, leading: 7, bottom: 3, trailing: 7))
-                                .border(Color.codeSampleGrayBorder(), width: 1)
+            ScrollView {
+                ScrollViewReader { scrollViewReader in
+                    LazyVStack {
+                        ForEach(viewModel.listings, id:\.id) { listingViewModel in
+                            ListRow(listingViewModel: listingViewModel)
+                                .listRowInsets(EdgeInsets())
+                                .id(listingViewModel.id)
+                                .frame(height: 220)
                         }
-                        
-                        .fullScreenCover(isPresented: $showingFilters) {
-                            Filters()
+                        HStack {
+                            Spacer()
+                            Text("Loading ...")
+                            Spacer()
+                        }.onAppear  {
+                            viewModel.fetch(getNextPage:  true)
                         }
                     }
-                }
-                .onReceive(viewModel.$shouldScrollToTop) { shouldScroll in
-                    if shouldScroll, let listViewModel: ListingViewModel = viewModel.listings.first {
-                        scrollViewReader.scrollTo(listViewModel.id, anchor: .top)
+                    .navigationBarTitle("", displayMode: .inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                showingFilters.toggle()
+                            } label: {
+                                Text("Filters")
+                                    .padding(EdgeInsets(top: 3, leading: 7, bottom: 3, trailing: 7))
+                                    .border(Color.codeSampleGrayBorder(), width: 1)
+                            }
+                            
+                            .fullScreenCover(isPresented: $showingFilters) {
+                                Filters()
+                            }
+                        }
                     }
-                }
-            }//ends scroll reader
-            
-        }
-        .task {
-            await viewModel.fetch()
+                    .onReceive(viewModel.$shouldScrollToTop) { shouldScroll in
+                        if shouldScroll, let listViewModel: ListingViewModel = viewModel.listings.first {
+                            scrollViewReader.scrollTo(listViewModel.id, anchor: .top)
+                        }
+                    }
+                }//ends scroll reader
+            }
+            .onAppear {
+                viewModel.fetch()
+            }
         }
     }
 }

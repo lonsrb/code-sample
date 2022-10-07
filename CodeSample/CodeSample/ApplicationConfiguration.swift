@@ -10,8 +10,8 @@ private var _shared : ApplicationConfiguration!
 
 class ApplicationConfiguration {
     
-    static let hostUrl: String = "http://127.0.0.1:8080"
-//    static let hostUrl: String = "http://ryanlons.me"
+//    static let hostUrl: String = "http://127.0.0.1:8080"
+        static let hostUrl: String = "http://ryanlons.com"
     var listingsService : ListingsServiceProtocol!
     var filtersService : FiltersServiceProtocol!
     
